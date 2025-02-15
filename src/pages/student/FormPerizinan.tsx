@@ -28,17 +28,23 @@ function FormPerizinan() {
   const [leavePermits, setLeavePermits] = useState([]);
 
   function fetchData() {
-    axios
-      .get(`${appSettings.api}/classes`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.msg) {
-          toast.warn(res.data.msg);
+    // Fetch Classes and Leave Permits in parallel
+    Promise.all([
+      axios.get(`${appSettings.api}/classes`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+      axios.get(`${appSettings.api}/permits`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+    ])
+      .then(([classRes, permitRes]) => {
+        console.log("Classes Response:", classRes.data);
+        console.log("Leave Permits Response:", permitRes.data);
+
+        if (classRes.data.msg) {
+          toast.warn(classRes.data.msg);
         } else {
-          const classOptions = res.data.map((el) => {
+          const classOptions = classRes.data.map((el) => {
             const startDate = new Date(el.start_date)
               .toLocaleString("id-ID", {
                 day: "2-digit",
@@ -67,16 +73,17 @@ function FormPerizinan() {
 
             return {
               value: el.id,
-              label: `${el.name} (${startDate}   ${startTime} - ${endDate}   ${endTime})`,
-              start_date: startDate,
-              end_date: endDate,
-              start_time: startTime,
-              end_time: endTime,
-              attend_at: el.attend_at,
+              label: `${el.name} (${startDate} ${startTime} - ${endDate} ${endTime})`,
             };
           });
 
           setClasses(classOptions);
+        }
+
+        if (permitRes.data.msg) {
+          toast.warn(permitRes.data.msg);
+        } else {
+          setLeavePermits(permitRes.data);
         }
       })
       .catch((err) => {
@@ -85,28 +92,6 @@ function FormPerizinan() {
             theme: "colored",
             toastId: "expired",
           });
-          localStorage.setItem("token", "");
-          setToken("");
-        } else {
-          toast.error(err.message, { theme: "colored" });
-        }
-      });
-
-    axios
-      .get(`${appSettings.api}/permits`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.data.msg) {
-          toast.warn(res.data.msg);
-        } else {
-          setLeavePermits(res.data);
-        }
-      })
-      .catch((err) => {
-        if (err.response?.status === 401) {
           localStorage.setItem("token", "");
           setToken("");
         } else {
@@ -128,7 +113,10 @@ function FormPerizinan() {
     }
 
     if (!formIzin.description) {
-      setFormIzin((prev) => ({ ...prev, descriptionErr: "Tidak boleh kosong" }));
+      setFormIzin((prev) => ({
+        ...prev,
+        descriptionErr: "Tidak boleh kosong",
+      }));
       return;
     }
 
@@ -138,7 +126,7 @@ function FormPerizinan() {
     }
 
     axios
-      .postForm(
+      .post(
         `${appSettings.api}/permits`,
         {
           user_id: userData.id,
@@ -147,9 +135,7 @@ function FormPerizinan() {
           img_file: formIzin.img_file,
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       )
       .then((res) => {
@@ -205,7 +191,11 @@ function FormPerizinan() {
         <p className="font-bold text-2xl md:text-3xl mb-16 mt-16">
           Riwayat <span className="text-themeTeal">Perizinan</span>
         </p>
-        {leavePermits.length === 0 ? <p className="text-base text-center mb-24">Anda belum memiliki riwayat perizinan</p> : leavePermits.map((el, id) => el.nis === userData.nis && <PermitCard key={id} {...el} fetchData={fetchData} />)}
+        {leavePermits.length === 0 ? (
+          <p className="text-base text-center mb-24">Anda belum memiliki riwayat perizinan</p>
+        ) : (
+          leavePermits.filter((el) => el.nis === userData.nis).map((el, id) => <PermitCard key={id} {...el} fetchData={fetchData} />)
+        )}
       </div>
     </div>
   );
