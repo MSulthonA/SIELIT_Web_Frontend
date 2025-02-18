@@ -1,6 +1,12 @@
+import flowbite from "flowbite-react/tailwind";
+
+
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}",
+    flowbite.content()
+  ],
   theme: {
     fontSize: {
       xs: '12px',
@@ -59,6 +65,7 @@ module.exports = {
         'themeYellow' : '#D4DE23',
         'themeRed' : '#F42517',
         'themeGray' : '#EDF7FF',
+        'themeDem' : '#EFEFEF',
       },
       gridTemplateColumns: {
         'fill': 'repeat(auto-fill, minmax(328px, 1fr))',
@@ -87,5 +94,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    flowbite.plugin()
+  ],
 }

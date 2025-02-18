@@ -7,13 +7,13 @@ type NavbarProps = {
     className?: string
 }
 
-function useOutsideAlerter(ref, isExpanded, setIsExpanded) {
+function useOutsideAlerter(ref: React.RefObject<HTMLDivElement>, setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>) {
     useEffect(() => {
       /**
        * Alert if clicked on outside of element
        */
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
+      function handleClickOutside(event: MouseEvent | TouchEvent) {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
   
               setIsExpanded(false);
         }
@@ -34,7 +34,7 @@ function Navbar({className}: NavbarProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const location = useLocation();
     const wrapperRef = useRef(null);
-    useOutsideAlerter(wrapperRef, isExpanded, setIsExpanded);
+    useOutsideAlerter(wrapperRef, setIsExpanded);
 
     return (
         <nav className={`h-28 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${className}`}>

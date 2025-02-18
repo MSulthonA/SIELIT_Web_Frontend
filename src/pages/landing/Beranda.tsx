@@ -10,7 +10,7 @@ function Beranda() {
 
     return (
         <div className="flex flex-col items-center justify-start relative">
-            <Navbar className="bg-themeTeal/20 items-center" />
+            <Navbar className="bg-themeGray/20 items-center" />
             <img src={Hero} alt="Tampak depan PPM" className="-mt-28 mb-12 w-full h-96 md:h-auto max-h-[65svh] object-cover -z-20 relative" />
             <p className="mb-12">
                 <span className="text-outline text-xl md:text-3xl text-themeYellow font-bold mr-2">Presensi Otomatis</span>

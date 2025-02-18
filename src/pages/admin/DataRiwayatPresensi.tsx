@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import appSettings from "../../Appsettings";
@@ -14,6 +15,7 @@ function DataRiwayatPresensi() {
     const token = useContext(AppContext).token.data;
     const setToken = useContext(AppContext).token.set;
     const namaHari = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+    // const isMobile = window.innerWidth < 268;
 
 
     useEffect(() => {
@@ -85,14 +87,18 @@ function DataRiwayatPresensi() {
     return (
         <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12">
             <p className="font-bold text-xl md:text-3xl mb-16">Riwayat <span className="text-themeTeal">Presensi</span></p>
-            <div className="w-full flex justify-between mb-4">
-                <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search.string} />
-                <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate}/>
-                <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate}/>
-                <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 mt-3 h-fit rounded" onClick={getAttendances}>Terapkan filter</button>
+            <div className="w-full flex flex-col md:flex-row justify-between gap-2">
+            <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full md:max-w-md" inputClassName="bg-white" value={search.string} />
+    <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="w-full md:w-auto" inputClassName="bg-white" value={search.startDate}/>
+    <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="w-full md:w-auto" inputClassName="bg-white" value={search.endDate}/>
+    <button className="w-full md:w-auto bg-themeTeal text-white text-sm font-semibold px-4 py-2 mt-3 md:mt-0 h-fit rounded" onClick={getAttendances}>Terapkan filter</button>
             </div>
-            <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
-                <table className="w-full h-12 text-center">
+            <div className="card-content collapse-show pt-4">
+                <div className="card-body card-dashboard">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="table-responsive overflow-x-auto">
+                            <table className="w-full h-12 text-center table-responsive">
                     <thead className="bg-themeTeal text-white sticky top-0 text-sm">
                         <tr>
                             <th className="pl-6 py-2">No</th>
@@ -104,6 +110,7 @@ function DataRiwayatPresensi() {
                             <th className="pl-6 py-2">Kehadiran</th>
                             <th className="pl-6 py-2">Pengabsen</th>
                             <th className="px-6 py-2">Aksi</th>
+                            <th className="px-6 py-2">Status</th>
                         </tr>
                     </thead>
                     <tbody className="text-sm">
@@ -135,7 +142,14 @@ function DataRiwayatPresensi() {
                         }
                     </tbody>
                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {/* <div className="rounded-lg overflow-x-a uto overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+                
+            </div> */}
         </div>
     );
 }
