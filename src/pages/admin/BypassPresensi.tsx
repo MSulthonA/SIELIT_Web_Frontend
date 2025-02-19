@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import appSettings from "../../Appsettings";
@@ -111,13 +112,13 @@ function BypassPresensi() {
 	}
 
 	return (
-		<div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12">
-			<p className="font-bold text-xl md:text-3xl mb-16">Bypass <span className="text-themeTeal">Presensi</span></p>
+		<div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow px-12 overflow-x-scroll">
+			<p className="font-bold text-xl md:text-3xl mb-16">Bypass Presensi</p>
 			<div className="w-full flex justify-between mb-4">
 				<TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search} />
 				<SelectInput name="class" title="Pilih kelas" errorMsg="" onChange={(e: any) => { setSelectedClassId(e.target.value); getAttendances() }} className="w-full ml-4" value={selectedClassId} values={classes} />
 			</div>
-			<div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+			<div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
 				<table className="w-full h-12 text-center">
 					<thead className="bg-themeTeal text-white sticky top-0 text-sm">
 						<tr>

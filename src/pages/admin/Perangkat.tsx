@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import appSettings from "../../Appsettings";
 import { AppContext } from "../../AppContext";
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
+// import { ToasContainer } from 'react-toastify';
 
 function Perangkat() {
     const [devices, setDevices] = useState([]);
@@ -42,15 +44,15 @@ function Perangkat() {
 
 
     return (
-        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow">
-            <p className="font-bold text-xl md:text-3xl mb-16">Status <span className="text-themeTeal">Perangkat</span></p>
+        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow overflow-x-scroll">
+            <p className="font-bold text-xl md:text-3xl mb-16">Status Perangkat</p>
             <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24">
                 <table className="w-full text-left h-12 text-sm">
                     <thead className="bg-themeTeal text-white sticky top-0">
                         <tr>
-                            <th className="pl-6 py-2">No.</th>
-                            <th className="pl-6 py-2">Nama Perangkat</th>
-                            <th className="pl-6 py-2 pr-6">Status</th>
+                            <th className="px-3 py-2 items-center">No.</th>
+                            <th className="px-3 py-2 items-center">Nama Perangkat</th>
+                            <th className="px-3 py-2 items-center pr-6">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,8 +61,8 @@ function Perangkat() {
 
                                 return (
                                     <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                                        <td className="pl-6 py-2">{index + 1}.</td>
-                                        <td className="pl-6 py-2">{device}</td>
+                                        <td className="px-3 py-2 items-center">{index + 1}.</td>
+                                        <td className="px-3 py-2 items-center">{device}</td>
                                         <td className={`pl-6 font-bold py-2 pr-6 ${devices[device] ? 'text-green-500' : 'text-gray-400'}`}>{devices[device] ? 'online' : 'offline'}</td>
                                     </tr>
                                 )

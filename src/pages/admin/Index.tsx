@@ -1,5 +1,4 @@
 import { useState, useContext, createContext } from "react";
-import Footer from "../../components/Footer"
 import Navbar from "./components/NavbarAdmin"
 import { Outlet } from 'react-router-dom'
 import { AppContext } from "../../AppContext";
@@ -20,12 +19,12 @@ function Admin() {
     return (
         <userContext.Provider value={userData}>
             <div className="flex flex-col items-center justify-start relative text-lg">
-                <Navbar className="bg-themeTeal" />
+                <Navbar className="bg-milkyWhite" />
                 <div className="flex items-start w-full min-h-[100svh]">
                 <Sidebar />
                 <Outlet />
                 </div>
-                <Footer />
+                {/* <Footer /> */}
             </div>
         </userContext.Provider>
     );

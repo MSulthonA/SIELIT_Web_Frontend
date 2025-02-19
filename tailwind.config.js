@@ -1,12 +1,6 @@
-import flowbite from "flowbite-react/tailwind";
-
-
 /** @type {import('tailwindcss').Config} */
-// eslint-disable-next-line no-undef
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}",
-    flowbite.content()
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontSize: {
       xs: '12px',
@@ -62,10 +56,13 @@ module.exports = {
       colors: {
         'themeOrange' : '#d98e04',
         'themeTeal' : '#13A89D',
+        'milkyWhite' : '#FEFCFF',
+        'themeMilk' : '#FFF1DE',
+        'themeMilk2' : '#FBFBFB',
+        'tiramisu' : '#F9F8F0',
         'themeYellow' : '#D4DE23',
         'themeRed' : '#F42517',
         'themeGray' : '#EDF7FF',
-        'themeDem' : '#EFEFEF',
       },
       gridTemplateColumns: {
         'fill': 'repeat(auto-fill, minmax(328px, 1fr))',
@@ -94,7 +91,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    flowbite.plugin()
-  ],
+  plugins: [],
 }

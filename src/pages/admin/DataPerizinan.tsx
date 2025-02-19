@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import appSettings from "../../Appsettings";
@@ -109,32 +110,32 @@ function DataPerizinan() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12">
+    <div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow px-12 overflow-x-scroll">
       <p className="font-bold text-xl md:text-3xl mb-16">
-        Data <span className="text-themeTeal">Perizinan</span>
+        Data Perizinan
       </p>
-      <div className="w-full flex justify-between mb-4">
-        <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search.string} />
+      <div className="w-full flex flex-col md:flex-row justify-between mb-4 gap-2">
+        <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-6" inputClassName="bg-white" value={search.string} />
         <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
         <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
-        <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 mt-3 h-fit rounded" onClick={getPermits}>
+        <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 items-center mt-3 h-fit rounded" onClick={getPermits}>
           Terapkan filter
         </button>
       </div>
-      <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+      <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
         <table className="w-full h-12 text-center">
           <thead className="bg-themeTeal text-white sticky top-0 text-sm">
             <tr>
-              <th className="pl-6 py-2">No</th>
-              <th className="py-2">NIS</th>
-              <th className="py-2">Nama</th>
-              <th className="py-2">Kelas</th>
-              <th className="py-2">Pengajian</th>
-              <th className="py-2">Tanggal</th>
-              <th className="py-2">Alasan</th>
-              <th className="py-2">Bukti</th>
-              <th className="py-2">Status</th>
-              <th className="pr-6 py-2">Aksi</th>
+              <th className="px-3 py-2 items-center">No</th>
+              <th className="px-3 py-2 items-center">NIS</th>
+              <th className="px-3 py-2 items-center">Nama</th>
+              <th className="px-3 py-2 items-center">Kelas</th>
+              <th className="px-3 py-2 items-center">Pengajian</th>
+              <th className="px-3 py-2 items-center">Tanggal</th>
+              <th className="px-3 py-2 items-center">Alasan</th>
+              <th className="px-3 py-2 items-center">Bukti</th>
+              <th className="px-3 py-2 items-center">Status</th>
+              <th className="px-3 py-2 items-center">Aksi</th>
             </tr>
           </thead>
           <tbody className="text-sm">
@@ -143,11 +144,11 @@ function DataPerizinan() {
               return (
                 checkSearch(permit) && (
                   <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                    <td className="pl-6 py-2">{index + 1}</td>
-                    <td className="py-2">{permit.nis}</td>
-                    <td className="py-2">{permit?.name?.length > 24 ? permit.name.substring(0, 24) + "..." : permit?.name || ""}</td> <td className="py-2">{permit.class_type}</td>
-                    <td className="py-2">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
-                    <td className="py-2">{startDate.toLocaleString("id").replace(/\//g, "-").replace(",", "")}</td>
+                    <td className="px-3 py-2 items-center">{index + 1}</td>
+                    <td className="px-3 py-2 items-center">{permit.nis}</td>
+                    <td className="px-3 py-2 items-center">{permit?.name?.length > 24 ? permit.name.substring(0, 24) + "..." : permit?.name || ""}</td> <td className="px-3 py-2 items-center">{permit.class_type}</td>
+                    <td className="px-3 py-2 items-center">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
+                    <td className="px-3 py-2 items-center">{startDate.toLocaleString("id").replace(/\//g, "-").replace(",", "")}</td>
                     <td>{permit.description}</td>
                     <td>
                       <a href={`${appSettings.api}${permit.img_url}`} target="_blank" rel="noreferrer noopener">
@@ -155,7 +156,7 @@ function DataPerizinan() {
                       </a>
                     </td>
                     <td className={`${permit.is_approved ? "text-themeTeal" : "text-themeRed"} font-semibold`}>{permit.is_approved ? "Disetujui" : "Belum disetujui"}</td>
-                    <td className="pr-6 py-2 flex flex-wrap gap-2 items-center justify-center">
+                    <td className="pr-6 px-3 py-2 items-center flex flex-wrap gap-2 items-center justify-center">
                       {!permit.is_approved && (
                         <button
                           className="bg-themeTeal text-white px-2 py-1 rounded"

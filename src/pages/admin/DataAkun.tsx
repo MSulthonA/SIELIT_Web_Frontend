@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import TextInput from "../../components/TextInput";
 import { useState, useEffect, useContext } from "react";
@@ -269,8 +270,8 @@ function DataAkun() {
     }
 
     return (
-        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-20">
-            <p className="font-bold text-xl md:text-3xl mb-16">{mode === 'form' ? account.id ? 'Edit' : 'Tambah' : ''} Data <span className="text-themeTeal">Akun</span></p>
+        <div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow px-20 overflow-x-scroll">
+            <p className="font-bold text-xl md:text-3xl mb-16">{mode === 'form' ? account.id ? 'Edit' : 'Tambah' : ''} Data Akun</p>
             {
                 mode === 'form' ?
                 <form className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16" onSubmit={(e) => {
@@ -288,12 +289,12 @@ function DataAkun() {
                         <TextInput name='telephone_number' value={account.telephone_number} title='Nomor telepon' errorMsg={account.telephone_numberErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <SelectInput title='Gender' name='gender' value={account.gender} onChange={handleChange} errorMsg={account.genderErr} values={genderOptions} />
                         <TextInput name='residence_in_semarang' value={account.residence_in_semarang} title='Tempat tinggal di Semarang' errorMsg={account.residence_in_semarangErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <div className="self-end justify-between flex">
-                        <button type="button" className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm" onClick={() => {
+                        <div className="justify-center items-center flex flex-col md:flex-row">
+                        <button type="button" className="bg-[#d9d9d9] px-12 py-2 mb-3 rounded mx-2 hover:scale-[1.03] font-semibold text-sm" onClick={() => {
                             setaccount(initialaccount);
                             setMode('view');
                         }}>Batal</button>
-                        <button type='submit' className='bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200'>Submit</button>
+                        <button type='submit' className='bg-themeTeal text-white font-semibold text-sm px-12 py-2 mb-3 mx-2 rounded hover:scale-[1.03] transition-all duration-200'>Submit</button>
                         </div>
                     </form>
                     :
@@ -306,11 +307,11 @@ function DataAkun() {
                             <table className="w-full h-12 text-center text-sm">
                                 <thead className="bg-themeTeal text-white sticky top-0">
                                     <tr>
-                                        <th className="pl-6 py-2">Nama</th>
-                                        <th className="pl-6 py-2">Role</th>
-                                        <th className="pl-6 py-2">Nomor Telepon</th>
-                                        <th className="pl-6 py-2">Jenis Kelamin</th>
-                                        <th className="px-6 py-2">Aksi</th>
+                                        <th className="px-3 py-2 items-center">Nama</th>
+                                        <th className="px-3 py-2 items-center">Role</th>
+                                        <th className="px-3 py-2 items-center">Nomor Telepon</th>
+                                        <th className="px-3 py-2 items-center">Jenis Kelamin</th>
+                                        <th className="px-3 py-2 items-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -319,11 +320,11 @@ function DataAkun() {
                                             return (
                                                 checkSearch(account) &&
                                                 <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                                                    <td className="pl-6 py-2">{account.name}</td>
-                                                    <td className="pl-6 py-2">{account.role == 2 ? 'Guru' : 'Admin' }</td>
-                                                    <td className="pl-6 py-2">{account.telephone_number}</td>
-                                                    <td className="pl-6 py-2">{account.gender ? 'Laki-laki' : 'Perempuan'}</td>
-                                                    <td className="px-6 py-2">
+                                                    <td className="px-3 py-2 items-center">{account.name}</td>
+                                                    <td className="px-3 py-2 items-center">{account.role == 2 ? 'Guru' : 'Admin' }</td>
+                                                    <td className="px-3 py-2 items-center">{account.telephone_number}</td>
+                                                    <td className="px-3 py-2 items-center">{account.gender ? 'Laki-laki' : 'Perempuan'}</td>
+                                                    <td className="px-3 py-2 items-center">
                                                         <button className="bg-themeOrange text-white px-2 py-1 rounded mr-2" onClick={
                                                             () => {
                                                                 setaccount({...initialaccount, ...account, birth_date: toSqlDate(account.birth_date)})
