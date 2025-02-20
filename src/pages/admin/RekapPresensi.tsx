@@ -105,18 +105,18 @@ function RekapPresensi() {
   const exportToPDF = () => {
     const doc = new jsPDF("landscape");
 
-    const weeks = Object.keys(recap).length && recap[Object.keys(recap)[0]];
+    const weeks = Object.keys(recap).length && recap[Object.keys(recap)[0]].slice().sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
     const tableColumn = [
       [
         { content: "No.", rowSpan: 4 },
         { content: "Nama Lengkap", rowSpan: 4 },
         { content: "Gender", rowSpan: 4 },
-        { content: "Jml Jadwal", rowSpan: 4 }, // Total Meetings column
+        { content: "Jml Jadwal", rowSpan: 4 },
       ],
     ];
 
     if (weeks) {
-      weeks.forEach((week, idx) => {
+      weeks.forEach((week) => {
         const start = new Date(week.week_start).getDate();
         const end = new Date(week.week_end).getDate();
         const month_start = new Date(week.week_start).toLocaleString("default", { month: "short" });
@@ -125,24 +125,21 @@ function RekapPresensi() {
       });
 
       tableColumn.push([]);
-      weeks.forEach((week, idx) => {
+      weeks.forEach((_, idx) => {
         tableColumn[1].push({ content: `Presensi Minggu - ${idx + 1}`, colSpan: 6 });
       });
 
       tableColumn.push([]);
-      weeks.forEach((week, idx) => {
+      weeks.forEach(() => {
         tableColumn[2].push({ content: "PAGI", colSpan: 3 });
         tableColumn[2].push({ content: "MALAM", colSpan: 3 });
       });
 
       tableColumn.push([]);
-      weeks.forEach((week, idx) => {
-        tableColumn[3].push({ content: "H", rowSpan: 1 });
-        tableColumn[3].push({ content: "I", rowSpan: 1 });
-        tableColumn[3].push({ content: "A", rowSpan: 1 });
-        tableColumn[3].push({ content: "H", rowSpan: 1 });
-        tableColumn[3].push({ content: "I", rowSpan: 1 });
-        tableColumn[3].push({ content: "A", rowSpan: 1 });
+      weeks.forEach(() => {
+        ["H", "I", "A", "H", "I", "A"].forEach((label) => {
+          tableColumn[3].push({ content: label, rowSpan: 1 });
+        });
       });
 
       tableColumn[0].push({ content: "% Hadir", rowSpan: 4 });
@@ -153,9 +150,8 @@ function RekapPresensi() {
     const tableRows = [];
 
     Object.keys(recap).forEach((key, idx) => {
-      const recapData = recap[key];
+      const recapData = recap[key].slice().sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
 
-      // Calculate total pertemuan
       const totalHadirPagi = recapData.reduce((sum, data) => sum + data.jumlah_hadir_pagi, 0);
       const totalIzinPagi = recapData.reduce((sum, data) => sum + data.jumlah_izin_pagi, 0);
       const totalAlfaPagi = recapData.reduce((sum, data) => sum + data.jumlah_alfa_pagi, 0);
@@ -165,17 +161,16 @@ function RekapPresensi() {
 
       const totalPertemuan = totalHadirPagi + totalIzinPagi + totalAlfaPagi + totalHadirMalam + totalIzinMalam + totalAlfaMalam;
 
-      // Calculate percentages
       const totalJadwal = totalPertemuan;
-      const percentageHadir = totalJadwal ? (((totalHadirPagi + totalHadirMalam) / totalJadwal) * 100).toFixed(0) + "%" : 0;
-      const percentageIzin = totalJadwal ? (((totalIzinPagi + totalIzinMalam) / totalJadwal) * 100).toFixed(0) + "%" : 0;
-      const percentageAlpha = totalJadwal ? (((totalAlfaPagi + totalAlfaMalam) / totalJadwal) * 100).toFixed(0) + "%" : 0;
+      const percentageHadir = totalJadwal ? (((totalHadirPagi + totalHadirMalam) / totalJadwal) * 100).toFixed(0) + "%" : "0%";
+      const percentageIzin = totalJadwal ? (((totalIzinPagi + totalIzinMalam) / totalJadwal) * 100).toFixed(0) + "%" : "0%";
+      const percentageAlpha = totalJadwal ? (((totalAlfaPagi + totalAlfaMalam) / totalJadwal) * 100).toFixed(0) + "%" : "0%";
 
       const rowData = [
         idx + 1,
         recapData[0].name,
         recapData[0].gender ? "L" : "P",
-        totalPertemuan, // Include total pertemuan
+        totalPertemuan,
         ...recapData.flatMap((data) => [data.jumlah_hadir_pagi, data.jumlah_izin_pagi, data.jumlah_alfa_pagi, data.jumlah_hadir_malam, data.jumlah_izin_malam, data.jumlah_alfa_malam]),
         percentageHadir,
         percentageIzin,
@@ -184,21 +179,28 @@ function RekapPresensi() {
       tableRows.push(rowData);
     });
 
-    doc.text("Rekap Presensi ", 14, 15);
+    doc.text("Rekap Presensi", 14, 15);
     doc.autoTable({
       head: tableColumn,
       body: tableRows,
       startY: 20,
-
       headStyles: {
-        fillColor: ["#13A89D"], // Blue color for header background
-        textColor: ["#fff"], // White color for header text
+        fillColor: [19, 168, 157],
+        textColor: [255, 255, 255],
       },
-      styles: { overflow: "linebreak", valign: "middle", halign: "center", lineWidth: 0.1, cellPadding: 2 },
+      styles: {
+        overflow: "linebreak",
+        valign: "middle",
+        halign: "center",
+        lineWidth: 0.1,
+        cellPadding: 2,
+      },
       theme: "grid",
     });
+
     doc.save("rekap_presensi.pdf");
   };
+
   const exportToExcel = () => {
     const wb = XLSX.utils.book_new();
     const ws_data = [];
@@ -209,8 +211,11 @@ function RekapPresensi() {
     const headerRow3 = [];
     const headerRow4 = [];
 
-    const weeks = recap && Object.keys(recap).length && recap[Object.keys(recap)[0]];
+    let weeks = recap && Object.keys(recap).length && recap[Object.keys(recap)[0]];
     if (weeks) {
+      // Sort weeks by start date
+      weeks = weeks.sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
+
       weeks.forEach((week, idx) => {
         const start = new Date(week.week_start).getDate();
         const end = new Date(week.week_end).getDate();
@@ -219,7 +224,7 @@ function RekapPresensi() {
         headerRow1.push(`${start} ${month_start} - ${end} ${month_end}`, "", "", "", "", "");
         headerRow2.push(`Presensi Minggu - ${idx + 1}`, "", "", "", "", "");
         headerRow3.push("", "", "", "", "", "PAGI", "MALAM");
-        headerRow4.push("H", "I", "A", " ", "H", "I", "A", "H", "I", "A", "H", "I", "A");
+        headerRow4.push("H", "I", "A", "", "H", "I", "A", "H", "I", "A", "H", "I", "A");
       });
 
       // Add summary columns to header
@@ -238,13 +243,16 @@ function RekapPresensi() {
     Object.keys(recap).forEach((key, idx) => {
       const recapData = recap[key];
 
+      // Sort recapData by week start date
+      const sortedRecapData = recapData.sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
+
       // Calculate total pertemuan and total jadwal
-      const totalHadirPagi = recapData.reduce((sum, data) => sum + data.jumlah_hadir_pagi, 0);
-      const totalIzinPagi = recapData.reduce((sum, data) => sum + data.jumlah_izin_pagi, 0);
-      const totalAlfaPagi = recapData.reduce((sum, data) => sum + data.jumlah_alfa_pagi, 0);
-      const totalHadirMalam = recapData.reduce((sum, data) => sum + data.jumlah_hadir_malam, 0);
-      const totalIzinMalam = recapData.reduce((sum, data) => sum + data.jumlah_izin_malam, 0);
-      const totalAlfaMalam = recapData.reduce((sum, data) => sum + data.jumlah_alfa_malam, 0);
+      const totalHadirPagi = sortedRecapData.reduce((sum, data) => sum + data.jumlah_hadir_pagi, 0);
+      const totalIzinPagi = sortedRecapData.reduce((sum, data) => sum + data.jumlah_izin_pagi, 0);
+      const totalAlfaPagi = sortedRecapData.reduce((sum, data) => sum + data.jumlah_alfa_pagi, 0);
+      const totalHadirMalam = sortedRecapData.reduce((sum, data) => sum + data.jumlah_hadir_malam, 0);
+      const totalIzinMalam = sortedRecapData.reduce((sum, data) => sum + data.jumlah_izin_malam, 0);
+      const totalAlfaMalam = sortedRecapData.reduce((sum, data) => sum + data.jumlah_alfa_malam, 0);
 
       const totalJadwal = totalHadirPagi + totalIzinPagi + totalAlfaPagi + totalHadirMalam + totalIzinMalam + totalAlfaMalam;
 
@@ -255,10 +263,10 @@ function RekapPresensi() {
 
       const rowData = [
         idx + 1,
-        recapData[0].name,
-        recapData[0].gender ? "L" : "P",
-        totalJadwal, // Use calculated totalJadwal
-        ...recapData.flatMap((data) => [data.jumlah_hadir_pagi, data.jumlah_izin_pagi, data.jumlah_alfa_pagi, data.jumlah_hadir_malam, data.jumlah_izin_malam, data.jumlah_alfa_malam]),
+        sortedRecapData[0].name,
+        sortedRecapData[0].gender ? "L" : "P",
+        totalJadwal,
+        ...sortedRecapData.flatMap((data) => [data.jumlah_hadir_pagi, data.jumlah_izin_pagi, data.jumlah_alfa_pagi, data.jumlah_hadir_malam, data.jumlah_izin_malam, data.jumlah_alfa_malam]),
         persentaseHadir,
         persentaseIzin,
         persentaseAlfa,
@@ -329,25 +337,38 @@ function RekapPresensi() {
                     Gender
                   </th>
                   {Object.keys(recap).length &&
-                    recap[Object.keys(recap)[0]].map((el: any) => {
-                      const start = new Date(el.week_start).getDate();
-                      const end = new Date(el.week_end).getDate();
-
-                      const month_start = new Date(el.week_start).toLocaleString("default", { month: "short" });
-                      const month_end = new Date(el.week_end).toLocaleString("default", { month: "short" });
-                      return <th className="py-2 px-4 border border-white" colSpan={6}>{`${start} ${month_start} - ${end} ${month_end}`}</th>;
-                    })}
+                    recap[Object.keys(recap)[0]]
+                      .slice()
+                      .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Urutkan ascending
+                      .map((el: any) => {
+                        const start = new Date(el.week_start).getDate();
+                        const end = new Date(el.week_end).getDate();
+                        const month_start = new Date(el.week_start).toLocaleString("default", { month: "short" });
+                        const month_end = new Date(el.week_end).toLocaleString("default", { month: "short" });
+                        return (
+                          <th className="py-2 px-4 border border-white" colSpan={6}>
+                            {`${start} ${month_start} - ${end} ${month_end}`}
+                          </th>
+                        );
+                      })}
                 </tr>
                 <tr>
                   {Object.keys(recap).length &&
-                    recap[Object.keys(recap)[0]].map((el: any, idx) => {
-                      return <th className="py-2 px-4 border border-white" colSpan={6}>{`Presensi Minggu - ${idx + 1}`}</th>;
-                    })}
+                    recap[Object.keys(recap)[0]]
+                      .slice()
+                      .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Urutkan ascending
+                      .map((el: any, idx) => (
+                        <th className="py-2 px-4 border border-white" colSpan={6}>
+                          {`Presensi Minggu - ${idx + 1}`}
+                        </th>
+                      ))}
                 </tr>
                 <tr>
                   {Object.keys(recap).length &&
-                    recap[Object.keys(recap)[0]].map((el: any, idx) => {
-                      return (
+                    recap[Object.keys(recap)[0]]
+                      .slice()
+                      .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Urutkan ascending
+                      .map((el: any, idx) => (
                         <>
                           <th className="py-2 px-4 border border-white" colSpan={3}>
                             PAGI
@@ -356,25 +377,26 @@ function RekapPresensi() {
                             MALAM
                           </th>
                         </>
-                      );
-                    })}
+                      ))}
                 </tr>
                 <tr>
                   {Object.keys(recap).length &&
-                    recap[Object.keys(recap)[0]].map((el: any, idx) => {
-                      return (
+                    recap[Object.keys(recap)[0]]
+                      .slice()
+                      .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Urutkan ascending
+                      .map((el: any, idx) => (
                         <>
                           <th className="py-2 px-4 border border-white">H</th>
                           <th className="py-2 px-4 border border-white">I</th>
                           <th className="py-2 px-4 border border-white bg-red-400">A</th>
                           <th className="py-2 px-4 border border-white">H</th>
-                          <th className="py-2 px-4 border border-white ">I</th>
+                          <th className="py-2 px-4 border border-white">I</th>
                           <th className="py-2 px-4 border border-white bg-red-400">A</th>
                         </>
-                      );
-                    })}
+                      ))}
                 </tr>
               </thead>
+
               <tbody>
                 {Object.keys(recap).length &&
                   Object.keys(recap).map((el, idx) => {
@@ -383,18 +405,23 @@ function RekapPresensi() {
                         <th className="py-2 border border-white">{idx + 1}.</th>
                         <th className="py-2 border border-white">{recap[el][0].name}</th>
                         <th className="py-2 border border-white">{recap[el][0].gender ? "L" : "P"}</th>
-                        {recap[el].map((el: any) => {
-                          return (
-                            <>
-                              <th className="py-2 border border-white">{el.jumlah_hadir_pagi}</th>
-                              <th className="py-2 border border-white">{el.jumlah_izin_pagi}</th>
-                              <th className="py-2 border border-white bg-red-400 text-white">{el.jumlah_alfa_pagi}</th>
-                              <th className="py-2 border border-white">{el.jumlah_hadir_malam}</th>
-                              <th className="py-2 border border-white">{el.jumlah_izin_malam}</th>
-                              <th className="py-2 border border-white bg-red-400 text-white">{el.jumlah_alfa_malam}</th>
-                            </>
-                          );
-                        })}
+
+                        {/* Urutkan recap[el] berdasarkan week_start */}
+                        {recap[el]
+                          .slice()
+                          .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Sorting ascending
+                          .map((item: any) => {
+                            return (
+                              <>
+                                <th className="py-2 border border-white">{item.jumlah_hadir_pagi}</th>
+                                <th className="py-2 border border-white">{item.jumlah_izin_pagi}</th>
+                                <th className="py-2 border border-white bg-red-400 text-white">{item.jumlah_alfa_pagi}</th>
+                                <th className="py-2 border border-white">{item.jumlah_hadir_malam}</th>
+                                <th className="py-2 border border-white">{item.jumlah_izin_malam}</th>
+                                <th className="py-2 border border-white bg-red-400 text-white">{item.jumlah_alfa_malam}</th>
+                              </>
+                            );
+                          })}
                       </tr>
                     );
                   })}
