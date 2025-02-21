@@ -1,5 +1,5 @@
 import { useState, useContext, createContext } from "react";
-import Navbar from "./components/NavbarAdmin"
+// import Navbar from "./components/NavbarAdmin"
 import { Outlet } from 'react-router-dom'
 import { AppContext } from "../../AppContext";
 import jwt from 'jwt-decode';
@@ -23,7 +23,9 @@ function Admin() {
                 {/* <Navbar className="bg-themeMilk2" /> */}
                 <div className="flex items-start w-full min-h-[100svh]">
                 <Sidebar />
-                <Outlet />
+                <main className="flex-1 flex-wrap p-0">
+                    <Outlet />
+                </main>
                 </div>
                 {/* <Footer /> */}
             </div>
