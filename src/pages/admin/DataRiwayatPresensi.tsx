@@ -18,6 +18,7 @@ function DataRiwayatPresensi() {
 
   useEffect(() => {
     getAttendances();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleSearch(e: any) {
@@ -103,16 +104,16 @@ function DataRiwayatPresensi() {
         <table className="w-full h-12 text-center">
           <thead className="bg-themeTeal text-white sticky top-0 text-sm">
             <tr>
-              <th className="pl-6 py-2">No</th>
-              <th className="pl-6 py-2">NIS</th>
-              <th className="pl-6 py-2">Nama</th>
-              <th className="pl-6 py-2">Kelas</th>
-              <th className="pl-6 py-2">Pengajian</th>
-              <th className="pl-6 py-2">Hari</th>
-              <th className="pl-6 py-2">Kehadiran</th>
-              <th className="pl-6 py-2">status</th>
-              <th className="pl-6 py-2">Pengabsen</th>
-              <th className="px-6 py-2">Aksi</th>
+              <th className="px-3 py-2 items-center font-semibold">No</th>
+              <th className="px-3 py-2 items-center font-semibold">NIS</th>
+              <th className="px-3 py-2 items-center font-semibold">Nama</th>
+              <th className="px-3 py-2 items-center font-semibold">Kelas</th>
+              <th className="px-3 py-2 items-center font-semibold">Pengajian</th>
+              <th className="px-3 py-2 items-center font-semibold">Hari</th>
+              <th className="px-3 py-2 items-center font-semibold">Kehadiran</th>
+              <th className="px-3 py-2 items-center font-semibold">status</th>
+              <th className="px-3 py-2 items-center font-semibold">Pengabsen</th>
+              <th className="px-3 py-2 items-center font-semibold">Aksi</th>
             </tr>
           </thead>
           <tbody className="text-sm">
@@ -122,16 +123,16 @@ function DataRiwayatPresensi() {
               return (
                 checkSearch(attendance) && (
                   <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                    <td className="pl-6 py-2">{index + 1}</td>
-                    <td className="pl-6 py-2">{attendance.nis}</td>
-                    <td className="pl-6 py-2">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + "..." : attendance.name}</td>
-                    <td className="pl-6 py-2">{attendance.class_type}</td>
-                    <td className="pl-6 py-2">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
-                    <td className="pl-6 py-2">{namaHari[startDate.getDay()]}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{index + 1}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{attendance.nis}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + "..." : attendance.name}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{attendance.class_type}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{namaHari[startDate.getDay()]}</td>
                     <td>{attendance.attend_at ? attendAt : "Not set"}</td>
-                    <td className="pl-6 py-2">{attendance.status}</td>
+                    <td className="px-3 py-2 items-center font-semibold">{attendance.status}</td>
                     <td>{attendance.lastEditBy}</td>
-                    <td className="px-6 py-2 flex flex-wrap gap-2 items-center justify-center">
+                    <td className="px-3 py-2 flex flex-wrap gap-2 items-center justify-center">
                       <button
                         className="bg-themeRed text-white px-2 py-1 rounded"
                         onClick={() => {

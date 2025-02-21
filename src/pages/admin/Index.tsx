@@ -12,14 +12,15 @@ function Admin() {
     let user = '';
     try {
         user = jwt(token)
+    // eslint-disable-next-line no-empty
     } catch (err) { }
 
-    const [userData, setUserData] = useState(user);
+    const [userData] = useState(user);
 
     return (
         <userContext.Provider value={userData}>
             <div className="flex flex-col items-center justify-start relative text-lg">
-                <Navbar className="bg-milkyWhite" />
+                {/* <Navbar className="bg-themeMilk2" /> */}
                 <div className="flex items-start w-full min-h-[100svh]">
                 <Sidebar />
                 <Outlet />

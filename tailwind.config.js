@@ -58,6 +58,7 @@ module.exports = {
         'themeTeal' : '#13A89D',
         'milkyWhite' : '#FEFCFF',
         'themeMilk' : '#FFF1DE',
+        'themeGreen' : '#C0EBA6',
         'themeMilk2' : '#FBFBFB',
         'tiramisu' : '#F9F8F0',
         'themeYellow' : '#D4DE23',
