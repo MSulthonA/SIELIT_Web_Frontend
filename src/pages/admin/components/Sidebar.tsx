@@ -6,7 +6,7 @@ import { IoPeople } from "react-icons/io5";
 import { MdClass } from "react-icons/md";
 import { BsFillDeviceSsdFill } from "react-icons/bs";
 import { Link, useLocation } from 'react-router-dom';
-import Logo from '../../../assets/logo.png';
+import logggo from '../../../assets/logggo.png';
 // import { AppContext } from '../../../AppContext';
 // import { useContext } from 'react';
 
@@ -31,14 +31,14 @@ const Sidebar: React.FC = () => {
     <div className={`flex h-screen bg-themeTeal2 text-gray-800 ${transitionClass} ${isMinimized ? 'w-14' : 'w-75'} pl-3 mt-3`}>
       <div className="flex w-full flex-col justify-between mt-3">
         <div className='flex flex-col justify-center items-center'>
-          {isMinimized ? <img src={Logo} alt="Logo PPM" className='w-11 mb-3' />
+          {isMinimized ? <img src={logggo} alt="logggo PPM" className='w-20 mb-3' />
            : 
            <div className='flex flex-col justify-center items-center'>
-             <img src={Logo} alt="Logo PPM" className='w-11 mb-3' />
+             <img src={logggo} alt="logggo PPM" className='w-20' />
              <p className='text-themeTeal font-bold text-2xl md:text2xl'>SI ELIT</p>
              <p className='text-sm md:text-base'>Pondok Pesantren <br /> Bina Khoirul Insan</p>
            </div>}
-            {/* <img src={Logo} alt="Logo PPM" className='w-11 mb-3' />
+            {/* <img src={logggo} alt="logggo PPM" className='w-11 mb-3' />
             <p className='text-themeTeal font-bold text-2xl md:text2xl'>SI ELIT</p>
             <p className='text-sm md:text-base'>Pondok Pesantren Bina Khoirul Insan</p> */}
         </div>
