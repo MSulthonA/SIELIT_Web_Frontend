@@ -125,19 +125,20 @@ function FormPerizinan() {
       return;
     }
 
+    // Gunakan FormData untuk mengirim data termasuk file
+    const formData = new FormData();
+    formData.append("user_id", userData.id);
+    formData.append("class_id", formIzin.class_id);
+    formData.append("description", formIzin.description);
+    formData.append("img_file", formIzin.img_file); // File dikirim di sini
+
     axios
-      .post(
-        `${appSettings.api}/permits`,
-        {
-          user_id: userData.id,
-          class_id: formIzin.class_id,
-          description: formIzin.description,
-          img_file: formIzin.img_file,
+      .post(`${appSettings.api}/permits`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
+      })
       .then((res) => {
         toast.success(res.data.msg, { theme: "colored" });
         fetchData();
