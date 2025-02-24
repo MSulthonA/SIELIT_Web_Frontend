@@ -6,7 +6,7 @@ const apis = {
 };
 
 const appSettings = {
-  api: apis.apiDev,
+  api: apis.apiProd,
 };
 
 export default appSettings;
