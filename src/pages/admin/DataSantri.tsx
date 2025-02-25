@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+import React from 'react';
 import TextInput from "../../components/TextInput";
 import { useState, useEffect, useContext } from "react";
 import appSettings from "../../Appsettings";
@@ -11,7 +13,7 @@ import DateInput from "../../components/DateInput";
 import {FiEdit} from 'react-icons/fi';
 import { BiSolidTrash } from "react-icons/bi";
 
-function DataSantri() {
+    const DataSantri: React.FC = () => { 
     const setToken = useContext(AppContext).token.set;
     const token = useContext(AppContext).token.data;
 
@@ -103,7 +105,7 @@ function DataSantri() {
         Object.keys(student).map((key) => {
             if (student[key] === '' && !key.endsWith('Err') && !key.endsWith('New') && key !== 'id' && key !== 'inactive_reason') {
                 res = false;
-                setStudent(prev => {
+                setStudent((prev: any) => {
                     return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
                 })
             }
@@ -112,7 +114,7 @@ function DataSantri() {
         const re = new RegExp(/\b[0-9A-F]{8}\b/gi);
         if(!re.exec(student.card_id)){
             res = false;
-            setStudent(prev => {
+            setStudent((prev: any) => {
                 return { ...prev, card_idErr: 'harus berupa 8 digit hexadecimal' }
             })
         }
@@ -185,7 +187,7 @@ function DataSantri() {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
-                }).then(res => {
+                }).then(() => {
                     toast.success('Berhasil menghapus data santri', { theme: "colored" });
                     getStudents();
                 }).catch(err => {
@@ -265,7 +267,7 @@ function DataSantri() {
     }
 
     function handleChange(e: any) {
-        setStudent(prev => {
+        setStudent((prev: any) => {
             return { ...prev, [e.target.name]: e.target.type == 'file' ? e.target.files[0] : e.target.value, [e.target.name + 'Err']: '' }
         })
     }
@@ -318,7 +320,7 @@ function DataSantri() {
                     :
                     <>
                         <div className="w-full flex flex-col md:flex-row items-center align-middle justify-between mb-8">
-                            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-80 max-w-lg mb-6" inputClassName="bg-white" value={search} />
+                            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-80 max-w-lg mb-6 shadow rounded-xl" inputClassName="bg-white" value={search} />
                             <button className="bg-themeTeal text-white font-bold px-4 py-2 rounded-lg text-sm" onClick={() => setMode('form')}>Tambah Data</button>
                         </div>
                         <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">

@@ -23,9 +23,9 @@ function Admin() {
                 {/* <Navbar className="bg-themeMilk2" /> */}
                 <div className="flex items-start w-full min-h-[100svh]">
                 <Sidebar />
-                <main className="flex-1 flex-wrap p-0">
-                    <Outlet />
-                </main>
+                <Outlet />
+                {/* <main className="flex-1 flex-wrap p-0">
+                </main> */}
                 </div>
                 {/* <Footer /> */}
             </div>

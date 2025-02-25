@@ -50,7 +50,6 @@ function Navbar({ className }: NavbarProps) {
             <div className='flex items-center'>
                 <img src={Logo} alt="Logo PPM" className='w-11 mr-3' />
                 <div>
-                    <p className='text-themeTeal font-bold text-2xl md:text2xl'>SI ELIT</p>
                     <p className='text-sm md:text-base'>Pondok Pesantren Bina Khoirul Insan</p>
                 </div>
             </div>

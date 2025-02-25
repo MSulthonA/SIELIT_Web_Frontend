@@ -299,8 +299,8 @@ function DataAkun() {
                     </form>
                     :
                     <>
-                        <div className="w-full flex items-center justify-between mb-8">
-                            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg" inputClassName="bg-white" value={search} />
+                        <div className="w-full flex flex-col md:flex-row items-center justify-between mb-8">
+                            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg mb-4 shadow rounded-xl" inputClassName="bg-white" value={search} />
                             <button className="bg-themeTeal text-white font-bold px-4 py-2 rounded-lg text-sm" onClick={() => setMode('form')}>Tambah Data</button>
                         </div>
                         <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">

@@ -88,7 +88,7 @@ function DataRiwayatPresensi() {
   }
 
   return (
-    <div className="min-h-[100svh] w-full flex flex-col items-center justify-start overflow-x-scroll px-12 pt-4">
+    <div className="mmin-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow px-12 overflow-x-scroll">
       <p className="font-bold text-xl md:text-3xl mb-16">
         Riwayat Presensi
       </p>
@@ -123,14 +123,14 @@ function DataRiwayatPresensi() {
               return (
                 checkSearch(attendance) && (
                   <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                    <td className="px-3 py-2 items-center font-semibold">{index + 1}</td>
-                    <td className="px-3 py-2 items-center font-semibold">{attendance.nis}</td>
-                    <td className="px-3 py-2 items-center font-semibold">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + "..." : attendance.name}</td>
-                    <td className="px-3 py-2 items-center font-semibold">{attendance.class_type}</td>
-                    <td className="px-3 py-2 items-center font-semibold">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
-                    <td className="px-3 py-2 items-center font-semibold">{namaHari[startDate.getDay()]}</td>
+                    <td className="px-3 py-2 items-center text-base">{index + 1}</td>
+                    <td className="px-3 py-2 items-center text-base">{attendance.nis}</td>
+                    <td className="px-3 py-2 items-center text-base">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + "..." : attendance.name}</td>
+                    <td className="px-3 py-2 items-center text-base">{attendance.class_type}</td>
+                    <td className="px-3 py-2 items-center text-base">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
+                    <td className="px-3 py-2 items-center text-base">{namaHari[startDate.getDay()]}</td>
                     <td>{attendance.attend_at ? attendAt : "Not set"}</td>
-                    <td className="px-3 py-2 items-center font-semibold">{attendance.status}</td>
+                    <td className="px-3 py-2 items-center text-base">{attendance.status}</td>
                     <td>{attendance.lastEditBy}</td>
                     <td className="px-3 py-2 flex flex-wrap gap-2 items-center justify-center">
                       <button
