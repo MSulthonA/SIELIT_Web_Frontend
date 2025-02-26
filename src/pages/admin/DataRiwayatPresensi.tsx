@@ -18,7 +18,7 @@ function DataRiwayatPresensi() {
 
   useEffect(() => {
     getAttendances();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleSearch(e: any) {
@@ -88,10 +88,8 @@ function DataRiwayatPresensi() {
   }
 
   return (
-    <div className="mmin-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow px-12 overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">
-        Riwayat Presensi
-      </p>
+    <div className="mmin-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow w-full overflow-x-scroll">
+      <p className="font-bold text-xl md:text-3xl mb-16">Riwayat Presensi</p>
       <div className="w-full flex xl:flex-row flex-col justify-between mb-4">
         <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-6" inputClassName="bg-white" value={search.string} />
         <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />

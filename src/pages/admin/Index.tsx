@@ -1,36 +1,39 @@
 import { useState, useContext, createContext } from "react";
-// import Navbar from "./components/NavbarAdmin"
-import { Outlet } from 'react-router-dom'
+import { Outlet } from "react-router-dom";
 import { AppContext } from "../../AppContext";
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
 import Sidebar from "./components/Sidebar";
 
-export const userContext = createContext({})
+export const UserContext = createContext({});
 
 function Admin() {
-    const token = useContext(AppContext).token.data;
-    let user = '';
-    try {
-        user = jwt(token)
-    // eslint-disable-next-line no-empty
-    } catch (err) { }
+  const token = useContext(AppContext).token.data;
+  let user = "";
+  try {
+    user = jwt(token);
+  } catch (err) {
+    console.error("Error decoding token:", err);
+  }
 
-    const [userData] = useState(user);
+  const [userData] = useState(user);
+  const [isMinimized, setIsMinimized] = useState(false);
 
-    return (
-        <userContext.Provider value={userData}>
-            <div className="flex flex-col items-center justify-start relative text-lg">
-                {/* <Navbar className="bg-themeMilk2" /> */}
-                <div className="flex items-start w-full min-h-[100svh]">
-                <Sidebar />
-                <Outlet />
-                {/* <main className="flex-1 flex-wrap p-0">
-                </main> */}
-                </div>
-                {/* <Footer /> */}
-            </div>
-        </userContext.Provider>
-    );
+  const toggleSidebar = () => {
+    setIsMinimized((prev) => !prev);
+  };
+
+  return (
+    <UserContext.Provider value={userData}>
+      <div className="flex flex-col items-center justify-start relative bg-themeSilver text-lg">
+        <div className={`flex transition-all duration-300 ${isMinimized ? "ml-16" : "ml-80"}`}>
+          <Sidebar isMinimized={isMinimized} toggleSidebar={toggleSidebar} />
+          <main className={`flex-1 p-4 w-120 md:w-128 xl:w-172 2xl:w-178`}>
+            <Outlet />
+          </main>
+        </div>
+      </div>
+    </UserContext.Provider>
+  );
 }
 
 export default Admin;

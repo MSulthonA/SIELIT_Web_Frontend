@@ -110,10 +110,8 @@ function DataPerizinan() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow px-12 overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">
-        Data Perizinan
-      </p>
+    <div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow w-full overflow-x-scroll">
+      <p className="font-bold text-xl md:text-3xl mb-16">Data Perizinan</p>
       <div className="w-full flex flex-col md:flex-row justify-between mb-4 gap-2">
         <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-6" inputClassName="bg-white" value={search.string} />
         <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
