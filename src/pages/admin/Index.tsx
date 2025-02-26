@@ -27,7 +27,7 @@ function Admin() {
       <div className="flex flex-col items-center justify-start relative bg-themeSilver text-lg">
         <div className={`flex transition-all duration-300 ${isMinimized ? "ml-16" : "ml-80"}`}>
           <Sidebar isMinimized={isMinimized} toggleSidebar={toggleSidebar} />
-          <main className={`flex-1 p-4 w-80 md:w-128 xl:w-172 2xl:w-178`}>
+          <main className={`flex-1 p-4 w-80 ${isMinimized ? "sm:w-160" : "sm:w-80"}  xl:w-172 2xl:w-178`}>
             <Outlet />
           </main>
         </div>

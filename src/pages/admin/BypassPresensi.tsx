@@ -136,7 +136,7 @@ function BypassPresensi() {
             setSelectedClassId(e.target.value);
             getAttendances();
           }}
-          className="w-full md:ml-4"
+          className="w-full xl:ml-4"
           value={selectedClassId}
           values={classes}
         />
