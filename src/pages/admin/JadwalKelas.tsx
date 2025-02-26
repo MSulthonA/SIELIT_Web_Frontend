@@ -414,23 +414,23 @@ function JadwalKelas() {
         </form>
       ) : (
         <>
-          <div className="w-full flex justify-between">
-            <div className="w-[400px]">
+          <div className="w-full flex justify-between flex-col md:flex-row">
+            <div className=" ">
               <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-4" inputClassName="bg-white" value={search.string} />
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-col md:flex-row ">
                 <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
                 <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
-                <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 h-full rounded" onClick={getClasses}>
+                <button className="bg-themeTeal text-white text-sm mb-4 font-semibold px-4 py-2 h-full rounded" onClick={getClasses}>
                   Terapkan filter
                 </button>
               </div>
             </div>
-            <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 h-full rounded self-end mb-7" onClick={() => setMode("form")}>
+            <button className="bg-themeTeal text-white text-sm items-center justify-center font-semibold px-4 py-2 h-full rounded self-end mb-7" onClick={() => setMode("form")}>
               Tambah Data
             </button>
           </div>
 
-          <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24 w-full">
+          <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-96 no-scrollbar mb-24 w-full">
             <table className="w-full h-12 text-sm text-center">
               <thead className="bg-themeTeal text-white sticky top-0">
                 <tr>

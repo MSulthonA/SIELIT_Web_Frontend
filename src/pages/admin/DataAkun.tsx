@@ -285,7 +285,7 @@ function DataAkun() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 grow overflow-x-scroll">
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 grow overflow-x-scroll ">
       <p className="font-bold text-xl md:text-3xl mb-16">{mode === "form" ? (account.id ? "Edit" : "Tambah") : ""} Data Akun</p>
       {mode === "form" ? (
         <form
@@ -337,7 +337,7 @@ function DataAkun() {
               Tambah Data
             </button>
           </div>
-          <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+          <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full no-scrollbar">
             <table className="w-full h-12 text-center text-sm">
               <thead className="bg-themeTeal text-white sticky top-0">
                 <tr>

@@ -305,7 +305,7 @@ function DataSantri() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-20">
+    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow w-full overflow-x-scroll">
       <p className="font-bold text-xl md:text-3xl mb-16">
         {mode === "form" ? (student.id ? "Edit" : "Tambah") : ""} Data <span className="text-themeTeal">Santri</span>
       </p>
@@ -372,14 +372,14 @@ function DataSantri() {
         </form>
       ) : (
         <>
-          <div className="w-full flex items-center justify-between mb-8">
-            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg" inputClassName="bg-white" value={search} />
+          <div className="w-full flex items-center flex-col md:flex-row justify-between mb-8">
+            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg mb-4" inputClassName="bg-white" value={search} />
             <button className="bg-themeTeal text-white font-bold px-4 py-2 rounded-lg text-sm" onClick={() => setMode("form")}>
               Tambah Data
             </button>
           </div>
 
-          <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+          <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
             <table className="w-full h-12 text-center text-sm">
               <thead className="bg-themeTeal text-white sticky top-0">
                 <tr>
