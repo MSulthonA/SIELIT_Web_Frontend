@@ -28,7 +28,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMinimized, toggleSidebar }) => {
 
   function logout() {
     Swal.fire({
-      title: "Apakan anda yakin ingin logout?",
+      title: "Apakah anda yakin ingin logout?",
       showCancelButton: true,
       confirmButtonText: "Ya",
       confirmButtonColor: "#d33",
