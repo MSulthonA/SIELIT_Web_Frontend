@@ -372,7 +372,7 @@ function DataSantri() {
         </form>
       ) : (
         <>
-          <div className="w-full flex items-center flex-col md:flex-row justify-between mb-8">
+          <div className="w-full flex items-center flex-col xl:flex-row justify-between mb-8">
             <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg mb-4" inputClassName="bg-white" value={search} />
             <button className="bg-themeTeal text-white font-bold px-4 py-2 rounded-lg text-sm" onClick={() => setMode("form")}>
               Tambah Data

@@ -126,7 +126,7 @@ function BypassPresensi() {
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow w-full overflow-x-scroll">
       <p className="font-bold text-xl md:text-3xl mb-16">Bypass Presensi</p>
-      <div className="w-full flex justify-between mb-4 flex-col md:flex-row">
+      <div className="w-full flex justify-between mb-4 flex-col xl:flex-row">
         <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search} />
         <SelectInput
           name="class"

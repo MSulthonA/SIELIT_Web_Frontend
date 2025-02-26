@@ -91,7 +91,7 @@ function DataRiwayatPresensi() {
       <p className="font-bold text-xl md:text-3xl mb-16">
         Riwayat <span className="text-themeTeal">Presensi</span>
       </p>
-      <div className="w-full flex justify-between flex-col md:flex-row mb-4">
+      <div className="w-full flex justify-between flex-col xl:flex-row mb-4">
         <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md md:mb-0" inputClassName="bg-white" value={search.string} />
         <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
         <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />

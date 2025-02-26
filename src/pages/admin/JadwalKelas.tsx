@@ -414,7 +414,7 @@ function JadwalKelas() {
         </form>
       ) : (
         <>
-          <div className="w-full flex justify-between flex-col md:flex-row">
+          <div className="w-full flex justify-between flex-col xl:flex-row">
             <div className=" ">
               <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-4" inputClassName="bg-white" value={search.string} />
               <div className="flex gap-4 flex-col md:flex-row ">
