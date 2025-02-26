@@ -13,7 +13,7 @@ import DateInput from "../../components/DateInput";
 import { FiEdit } from "react-icons/fi";
 import { BiSolidTrash } from "react-icons/bi";
 
-const DataSantri: React.FC = () => {
+function DataSantri() {
   const setToken = useContext(AppContext).token.set;
   const token = useContext(AppContext).token.data;
 
@@ -105,21 +105,40 @@ const DataSantri: React.FC = () => {
 
   function validateStudent() {
     let res = true;
+
+    // Cek apakah ini operasi tambah (jika student.id kosong/null)
+    const isAddOperation = !student.id;
+
     Object.keys(student).map((key) => {
-      if (student[key] === "" && !key.endsWith("Err") && !key.endsWith("New") && key !== "id" && key !== "inactive_reason") {
+      if (student[key] === "" && !key.endsWith("Err") && !key.endsWith("New") && key !== "id" && key !== "inactive_reason" && !(isAddOperation && key === "card_id")) {
         res = false;
-        setStudent((prev: any) => {
+        setStudent((prev) => {
           return { ...prev, [key + "Err"]: "tidak boleh kosong" };
         });
       }
     });
 
-    const re = new RegExp(/\b[0-9A-F]{8}\b/gi);
-    if (!re.exec(student.card_id)) {
-      res = false;
-      setStudent((prev: any) => {
-        return { ...prev, card_idErr: "harus berupa 8 digit hexadecimal" };
-      });
+    // Validasi card_id hanya jika tidak kosong
+    const re = new RegExp(/^[0-9A-F]{8}$/i);
+    if (student.card_id) {
+      if (!re.exec(student.card_id)) {
+        res = false;
+        setStudent((prev) => ({
+          ...prev,
+          card_idErr: "harus berupa 8 digit hexadecimal",
+        }));
+      } else {
+        setStudent((prev) => ({
+          ...prev,
+          card_idErr: "", // Clear error jika valid
+        }));
+      }
+    } else {
+      // Kosongkan error jika card_id kosong saat tambah data
+      setStudent((prev) => ({
+        ...prev,
+        card_idErr: "",
+      }));
     }
 
     if (!res) {
@@ -193,7 +212,8 @@ const DataSantri: React.FC = () => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then(() => {
+
+          .then((res) => {
             toast.success("Berhasil menghapus data santri", { theme: "colored" });
             getStudents();
           })
@@ -279,14 +299,16 @@ const DataSantri: React.FC = () => {
   }
 
   function handleChange(e: any) {
-    setStudent((prev: any) => {
+    setStudent((prev) => {
       return { ...prev, [e.target.name]: e.target.type == "file" ? e.target.files[0] : e.target.value, [e.target.name + "Err"]: "" };
     });
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center w-full justify-start pt-4 pb-16 grow  overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-6">{mode === "form" ? (student.id ? "Edit" : "Tambah") : ""} Data Santri</p>
+    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-20">
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        {mode === "form" ? (student.id ? "Edit" : "Tambah") : ""} Data <span className="text-themeTeal">Santri</span>
+      </p>
       {mode === "form" ? (
         <form
           className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16"
@@ -300,7 +322,7 @@ const DataSantri: React.FC = () => {
         >
           <TextInput name="name" value={student.name} title="Nama" errorMsg={student.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
 
-          <TextInput name="card_id" value={student.card_id} title="Card Id" errorMsg={student.card_idErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+          <TextInput name="card_id" value={student.card_id || ""} title="Card Id" errorMsg={student.card_idErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
           <TextInput
             name={student.id ? "passwordNew" : "password"}
             value={student.id ? student.passwordNew : student.password}
@@ -330,10 +352,11 @@ const DataSantri: React.FC = () => {
             ]}
           />
           {student.is_active == "0" && <TextInput name="inactive_reason" value={student.inactive_reason} title="Alasan tidak aktif" errorMsg={student.inactive_reasonErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />}
-          <div className="justify-center items-center flex flex-col md:flex-row">
+
+          <div className="self-end justify-between flex">
             <button
               type="button"
-              className="bg-[#d9d9d9] px-12 py-2 rounded mx-2 mb-4 hover:scale-[1.03] font-semibold text-sm"
+              className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
               onClick={() => {
                 setStudent(initialStudent);
                 setMode("view");
@@ -341,32 +364,34 @@ const DataSantri: React.FC = () => {
             >
               Batal
             </button>
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 mb-4 mx-2 rounded hover:scale-[1.03] transition-all duration-200">
+
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>
         </form>
       ) : (
         <>
-          <div className="w-full flex flex-col md:flex-row items-center align-middle justify-between mb-8">
-            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-80 max-w-lg mb-6 shadow rounded-xl" inputClassName="bg-white" value={search} />
+          <div className="w-full flex items-center justify-between mb-8">
+            <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg" inputClassName="bg-white" value={search} />
             <button className="bg-themeTeal text-white font-bold px-4 py-2 rounded-lg text-sm" onClick={() => setMode("form")}>
               Tambah Data
             </button>
           </div>
-          <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+
+          <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
             <table className="w-full h-12 text-center text-sm">
               <thead className="bg-themeTeal text-white sticky top-0">
                 <tr>
-                  <th className="px-3 py-2 items-center">No.</th>
-                  <th className="px-3 py-2 items-center">
+                  <th className="pl-6 py-2">No.</th>
+                  <th className="pl-6 py-2">
                     NIS <br /> (Nomor Induk Santri)
                   </th>
-                  <th className="px-3 py-2 items-center">Nama</th>
-                  <th className="px-3 py-2 items-center">Kelas</th>
-                  <th className="px-3 py-2 items-center">Angkatan</th>
-                  <th className="px-3 py-2 items-center">Jenis Kelamin</th>
-                  <th className="px-3 py-2 items-center">Aksi</th>
+                  <th className="pl-6 py-2">Nama</th>
+                  <th className="pl-6 py-2">Kelas</th>
+                  <th className="pl-6 py-2">Angkatan</th>
+                  <th className="px-6 py-2">Jenis Kelamin</th>
+                  <th className="px-6 py-2">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -374,13 +399,13 @@ const DataSantri: React.FC = () => {
                   return (
                     checkSearch(student) && (
                       <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                        <td className="px-3 py-2 items-center">{index + 1}</td>
-                        <td className="px-3 py-2 items-center">{student.nis}</td>
-                        <td className="px-3 py-2 items-center">{student.name}</td>
-                        <td className="px-3 py-2 items-center">{student.class_name}</td>
-                        <td className="px-3 py-2 items-center">{student.grade}</td>
-                        <td className="px-3 py-2 items-center">{student.gender ? "Laki-laki" : "Perempuan"}</td>
-                        <td className="px-3 py-2 items-center">
+                        <td className="pl-6 py-2">{index + 1}</td>
+                        <td className="pl-6 py-2">{student.nis}</td>
+                        <td className="pl-6 py-2">{student.name}</td>
+                        <td className="pl-6 py-2">{student.class_name}</td>
+                        <td className="pl-6 py-2">{student.grade}</td>
+                        <td className="pl-6 py-2">{student.gender ? "Laki-laki" : "Perempuan"}</td>
+                        <td className="px-6 py-2">
                           <button
                             className="bg-themeOrange text-white px-2 py-1 rounded mr-2"
                             onClick={() => {
@@ -410,6 +435,6 @@ const DataSantri: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default DataSantri;

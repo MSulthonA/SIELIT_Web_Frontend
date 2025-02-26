@@ -342,6 +342,7 @@ function JadwalKelas() {
   return (
     <div className="min-h-[100svh] flex flex-col items-center w-full pt-4 pb-16 grow overflow-x-scroll">
       <p className="font-bold text-xl md:text-3xl mb-16">{mode === "form" ? (kelas.id ? "Edit" : "Tambah") : ""} Jadwal Kelas</p>
+
       {mode === "form" ? (
         <form
           className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16"
@@ -395,10 +396,10 @@ function JadwalKelas() {
           <SelectInput title="Pengurus" name="manager_id" value={kelas.manager_id} onChange={handleChange} errorMsg={kelas.manager_idErr} values={students} />
           <SelectInput title="Tipe kelas" name="type" value={kelas.type} onChange={handleChange} errorMsg={kelas.typeErr} values={classTypes.map((ct) => ({ value: ct.id, label: ct.name }))} />{" "}
           <SelectInput title="Guru" name="teacher_id" value={kelas.teacher_id} onChange={handleChange} errorMsg={kelas.teacher_idErr} values={teachers} />
-          <div className=" justify-center flex flex-col md:flex-row">
+          <div className="self-end justify-between flex">
             <button
               type="button"
-              className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 mb-3 hover:scale-[1.03] font-semibold text-sm"
+              className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
               onClick={() => {
                 setKelas(initialKelas);
                 setMode("view");
@@ -406,20 +407,20 @@ function JadwalKelas() {
             >
               Batal
             </button>
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 mb-3 rounded hover:scale-[1.03] transition-all duration-200">
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>
         </form>
       ) : (
         <>
-          <div className="w-full flex flex-col md:flex-row justify-between">
-            <div className="w-300">
+          <div className="w-full flex justify-between">
+            <div className="w-[400px]">
               <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-4" inputClassName="bg-white" value={search.string} />
-              <div className="flex flex-col md:flex-row gap-4 items-center">
+              <div className="flex gap-4">
                 <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
                 <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
-                <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 mb-2 h-full rounded" onClick={getClasses}>
+                <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 h-full rounded" onClick={getClasses}>
                   Terapkan filter
                 </button>
               </div>
@@ -428,7 +429,8 @@ function JadwalKelas() {
               Tambah Data
             </button>
           </div>
-          <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-96 no-scrollbar mb-24 w-full">
+
+          <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24 w-full">
             <table className="w-full h-12 text-sm text-center">
               <thead className="bg-themeTeal text-white sticky top-0">
                 <tr>

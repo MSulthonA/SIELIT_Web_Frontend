@@ -18,7 +18,6 @@ function DataRiwayatPresensi() {
 
   useEffect(() => {
     getAttendances();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleSearch(e: any) {
@@ -88,30 +87,32 @@ function DataRiwayatPresensi() {
   }
 
   return (
-    <div className="mmin-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow w-full overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">Riwayat Presensi</p>
-      <div className="w-full flex xl:flex-row flex-col justify-between mb-4">
-        <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-6" inputClassName="bg-white" value={search.string} />
+    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12">
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        Riwayat <span className="text-themeTeal">Presensi</span>
+      </p>
+      <div className="w-full flex justify-between mb-4">
+        <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search.string} />
         <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
         <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
         <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 mt-3 h-fit rounded" onClick={getAttendances}>
           Terapkan filter
         </button>
       </div>
-      <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
+      <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
         <table className="w-full h-12 text-center">
           <thead className="bg-themeTeal text-white sticky top-0 text-sm">
             <tr>
-              <th className="px-3 py-2 items-center font-semibold">No</th>
-              <th className="px-3 py-2 items-center font-semibold">NIS</th>
-              <th className="px-3 py-2 items-center font-semibold">Nama</th>
-              <th className="px-3 py-2 items-center font-semibold">Kelas</th>
-              <th className="px-3 py-2 items-center font-semibold">Pengajian</th>
-              <th className="px-3 py-2 items-center font-semibold">Hari</th>
-              <th className="px-3 py-2 items-center font-semibold">Kehadiran</th>
-              <th className="px-3 py-2 items-center font-semibold">status</th>
-              <th className="px-3 py-2 items-center font-semibold">Pengabsen</th>
-              <th className="px-3 py-2 items-center font-semibold">Aksi</th>
+              <th className="pl-6 py-2">No</th>
+              <th className="pl-6 py-2">NIS</th>
+              <th className="pl-6 py-2">Nama</th>
+              <th className="pl-6 py-2">Kelas</th>
+              <th className="pl-6 py-2">Pengajian</th>
+              <th className="pl-6 py-2">Hari</th>
+              <th className="pl-6 py-2">Kehadiran</th>
+              <th className="pl-6 py-2">status</th>
+              <th className="pl-6 py-2">Pengabsen</th>
+              <th className="px-6 py-2">Aksi</th>
             </tr>
           </thead>
           <tbody className="text-sm">
@@ -121,16 +122,16 @@ function DataRiwayatPresensi() {
               return (
                 checkSearch(attendance) && (
                   <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                    <td className="px-3 py-2 items-center text-base">{index + 1}</td>
-                    <td className="px-3 py-2 items-center text-base">{attendance.nis}</td>
-                    <td className="px-3 py-2 items-center text-base">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + "..." : attendance.name}</td>
-                    <td className="px-3 py-2 items-center text-base">{attendance.class_type}</td>
-                    <td className="px-3 py-2 items-center text-base">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
-                    <td className="px-3 py-2 items-center text-base">{namaHari[startDate.getDay()]}</td>
+                    <td className="pl-6 py-2">{index + 1}</td>
+                    <td className="pl-6 py-2">{attendance.nis}</td>
+                    <td className="pl-6 py-2">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + "..." : attendance.name}</td>
+                    <td className="pl-6 py-2">{attendance.class_type}</td>
+                    <td className="pl-6 py-2">{startDate.getHours() > 13 ? (startDate.getHours() > 18 ? "Malam" : "Sore") : "Pagi"}</td>
+                    <td className="pl-6 py-2">{namaHari[startDate.getDay()]}</td>
                     <td>{attendance.attend_at ? attendAt : "Not set"}</td>
-                    <td className="px-3 py-2 items-center text-base">{attendance.status}</td>
+                    <td className="pl-6 py-2">{attendance.status}</td>
                     <td>{attendance.lastEditBy}</td>
-                    <td className="px-3 py-2 flex flex-wrap gap-2 items-center justify-center">
+                    <td className="px-6 py-2 flex flex-wrap gap-2 items-center justify-center">
                       <button
                         className="bg-themeRed text-white px-2 py-1 rounded"
                         onClick={() => {
