@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
+("use client");
+import { motion } from "framer-motion";
 import React from "react";
 import TextInput from "../../components/TextInput";
 import { useState, useEffect, useContext } from "react";
@@ -12,6 +14,7 @@ import SelectInput from "../../components/SelectInput";
 import DateInput from "../../components/DateInput";
 import { FiEdit } from "react-icons/fi";
 import { BiSolidTrash } from "react-icons/bi";
+import VisualCard from "../../components/VisualCard";
 
 function DataSantri() {
   const setToken = useContext(AppContext).token.set;
@@ -372,11 +375,16 @@ function DataSantri() {
         </form>
       ) : (
         <>
-          <div className="w-full flex items-center flex-col xl:flex-row justify-between mb-8">
+          <div className="w-full flex items-center flex-col xl:flex-row justify-between mb-4">
             <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-lg mb-4" inputClassName="bg-white" value={search} />
             <button className="bg-themeTeal text-white font-bold px-4 py-2 rounded-lg text-sm" onClick={() => setMode("form")}>
               Tambah Data
             </button>
+          </div>
+          <div className="w-full overflow-x-auto no-scrollbar mb-8">
+            <div className="flex gap-5 w-max">
+              <VisualCard key={Math.random()} />
+            </div>
           </div>
 
           <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
