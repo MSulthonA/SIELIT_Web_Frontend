@@ -396,10 +396,10 @@ function JadwalKelas() {
           <SelectInput title="Pengurus" name="manager_id" value={kelas.manager_id} onChange={handleChange} errorMsg={kelas.manager_idErr} values={students} />
           <SelectInput title="Tipe kelas" name="type" value={kelas.type} onChange={handleChange} errorMsg={kelas.typeErr} values={classTypes.map((ct) => ({ value: ct.id, label: ct.name }))} />{" "}
           <SelectInput title="Guru" name="teacher_id" value={kelas.teacher_id} onChange={handleChange} errorMsg={kelas.teacher_idErr} values={teachers} />
-          <div className="self-end justify-between flex">
+          <div className="self-end justify-between flex flex-col lg:flex-row gap-2 lg:gap-0">
             <button
               type="button"
-              className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
+              className="bg-[#d9d9d9] w-36 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
               onClick={() => {
                 setKelas(initialKelas);
                 setMode("view");
@@ -407,7 +407,7 @@ function JadwalKelas() {
             >
               Batal
             </button>
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200">
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm w-36 py-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>

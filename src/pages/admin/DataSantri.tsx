@@ -356,10 +356,10 @@ function DataSantri() {
           />
           {student.is_active == "0" && <TextInput name="inactive_reason" value={student.inactive_reason} title="Alasan tidak aktif" errorMsg={student.inactive_reasonErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />}
 
-          <div className="self-end justify-between flex">
+          <div className="self-end justify-between flex flex-col gap-2 lg:gap-0 lg:flex-row">
             <button
               type="button"
-              className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
+              className="bg-[#d9d9d9] w-36 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
               onClick={() => {
                 setStudent(initialStudent);
                 setMode("view");
@@ -368,7 +368,7 @@ function DataSantri() {
               Batal
             </button>
 
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200">
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm w-36 py-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>
@@ -383,7 +383,7 @@ function DataSantri() {
           </div>
           <div className="w-full overflow-x-auto no-scrollbar mb-8">
             <div className="flex gap-5 w-max">
-              <VisualCard key={Math.random()} />
+              <VisualCard />
             </div>
           </div>
 
