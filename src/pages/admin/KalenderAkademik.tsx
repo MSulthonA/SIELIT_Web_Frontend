@@ -10,7 +10,7 @@ import TextInput from "../../components/TextInput";
 import DateInput from "../../components/DateInput";
 import Swal from "sweetalert2";
 
-function DataKalender() {
+function KalenderAkademik() {
   const token = useContext(AppContext)?.token?.data || "";
   const [calendars, setCalendars] = useState<any[]>([]);
   const [search, setSearch] = useState("");
@@ -328,4 +328,4 @@ function DataKalender() {
   );
 }
 
-export default DataKalender;
+export default KalenderAkademik;

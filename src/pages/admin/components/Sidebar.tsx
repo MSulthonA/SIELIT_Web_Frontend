@@ -93,15 +93,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isMinimized, toggleSidebar }) => {
                   {isMinimized ? null : <span className="ml-2">Riwayat Presensi</span>}
                 </a>
               </li>
-              <Link to="/admin/kalenderAkademik" onClick={() => (isMinimized || window.innerWidth < 1000) && toggleSidebar()}>
-                <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/kalenderAkademik" ? "bg-themeSilver shadow" : ""}`}>
-                  <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/kalenderAkademik" ? "text-themeTeal font-semibold" : ""}`}>
-                    <FaCalendarDays className="" />
-                    {isMinimized ? null : <span className="ml-2">Kalender Akademik</span>}
-                  </a>
-                </li>
-              </Link>
             </Link>
+            <Link to="/admin/kalenderAkademik" onClick={() => (isMinimized || window.innerWidth < 1000) && toggleSidebar()}>
+              <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/kalenderAkademik" ? "bg-themeSilver shadow" : ""}`}>
+                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/kalenderAkademik" ? "text-themeTeal font-semibold" : ""}`}>
+                  <FaCalendarDays className="" />
+                  {isMinimized ? null : <span className="ml-2">Kalender Akademik</span>}
+                </a>
+              </li>
+            </Link>
+
             <hr className="border-gray-400 " />
             <Link to="/admin/jadwalKelas" onClick={() => (isMinimized || window.innerWidth < 1000) && toggleSidebar()}>
               <li className={` p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/jadwalKelas" ? "bg-themeSilver shadow" : ""} justify-center`}>
