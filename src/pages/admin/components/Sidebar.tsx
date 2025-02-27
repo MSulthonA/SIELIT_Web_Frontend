@@ -1,14 +1,16 @@
 import React, { useState, useContext } from "react";
 import { HiUser, HiBars3BottomLeft, HiBars3 } from "react-icons/hi2";
-import { FaCalendarCheck, FaFileCircleCheck, FaCalendarDays } from "react-icons/fa6";
+import { FaCalendarCheck, FaFileCircleCheck, FaCalendarDays, Fa0 } from "react-icons/fa6";
 import { FaCheckDouble } from "react-icons/fa";
 import { IoPeople, IoLogOut } from "react-icons/io5";
 import { MdClass } from "react-icons/md";
-import { BsFillDeviceSsdFill } from "react-icons/bs";
+import { BsCalendar, BsCalendarFill, BsFillDeviceSsdFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 import logggo from "../../../assets/logggo.png";
 import Swal from "sweetalert2";
 import { AppContext } from "../../../AppContext";
+import { Calendar, Calendar1Icon, CalendarArrowUpIcon } from "lucide-react";
+import { BiCalendarStar } from "react-icons/bi";
 // import { userContext } from '../Index';
 
 interface SidebarProps {
@@ -87,10 +89,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isMinimized, toggleSidebar }) => {
             <Link to="/admin/dataRiwayatPresensi" onClick={() => (isMinimized || window.innerWidth < 1000) && toggleSidebar()}>
               <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/dataRiwayatPresensi" ? "bg-themeSilver shadow" : ""}`}>
                 <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/dataRiwayatPresensi" ? "text-themeTeal font-semibold" : ""}`}>
-                  <FaCalendarDays className="" />
+                  <BsCalendarFill className="" />
                   {isMinimized ? null : <span className="ml-2">Riwayat Presensi</span>}
                 </a>
               </li>
+              <Link to="/admin/kalenderAkademik" onClick={() => (isMinimized || window.innerWidth < 1000) && toggleSidebar()}>
+                <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/kalenderAkademik" ? "bg-themeSilver shadow" : ""}`}>
+                  <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/kalenderAkademik" ? "text-themeTeal font-semibold" : ""}`}>
+                    <FaCalendarDays className="" />
+                    {isMinimized ? null : <span className="ml-2">Kalender Akademik</span>}
+                  </a>
+                </li>
+              </Link>
             </Link>
             <hr className="border-gray-400 " />
             <Link to="/admin/jadwalKelas" onClick={() => (isMinimized || window.innerWidth < 1000) && toggleSidebar()}>

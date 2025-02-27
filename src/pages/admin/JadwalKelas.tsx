@@ -340,8 +340,10 @@ function JadwalKelas() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center w-full pt-4 pb-16 grow overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">{mode === "form" ? (kelas.id ? "Edit" : "Tambah") : ""} Jadwal Kelas</p>
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        {mode === "form" ? (kelas.id ? "Edit" : "Tambah") : ""} Jadwal <span className="text-themeTeal">Kelas</span>
+      </p>
 
       {mode === "form" ? (
         <form
@@ -417,7 +419,7 @@ function JadwalKelas() {
           <div className="w-full flex justify-between flex-col xl:flex-row">
             <div className=" ">
               <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-4" inputClassName="bg-white" value={search.string} />
-              <div className="flex gap-4 flex-col xl:flex-row ">
+              <div className="flex gap-4 flex-col xl:flex-row xl:items-center">
                 <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
                 <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
                 <button className="bg-themeTeal text-white text-sm mb-4 font-semibold px-4 py-2 h-full rounded" onClick={getClasses}>

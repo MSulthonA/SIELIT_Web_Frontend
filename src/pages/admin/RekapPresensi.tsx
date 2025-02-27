@@ -302,8 +302,10 @@ function RekapPresensi() {
     XLSX.writeFile(wb, "rekap_presensi.xlsx");
   };
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start pt-4 pb-16 grow w-full overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">Rekap Presensi</p>
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        Rekap <span className="text-themeTeal">Presensi</span>
+      </p>
       <div className="w-full flex flex-col xl:flex-row gap-2 justify-between mb-4">
         <SelectInput name="classType" title="Tipe Kelas" errorMsg={search.classTypeErr} onChange={handleSearch} className="w-full max-w-md" value={search.classType} values={classTypes} />
         <DateInput name="startDate" title="dari" errorMsg={search.startDateErr} onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />

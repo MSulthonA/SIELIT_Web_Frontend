@@ -308,7 +308,7 @@ function DataSantri() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow w-full overflow-x-scroll">
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
       <p className="font-bold text-xl md:text-3xl mb-16">
         {mode === "form" ? (student.id ? "Edit" : "Tambah") : ""} Data <span className="text-themeTeal">Santri</span>
       </p>

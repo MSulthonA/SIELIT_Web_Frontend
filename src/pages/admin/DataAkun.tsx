@@ -286,7 +286,9 @@ function DataAkun() {
 
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 grow overflow-x-scroll ">
-      <p className="font-bold text-xl md:text-3xl mb-16">{mode === "form" ? (account.id ? "Edit" : "Tambah") : ""} Data Akun</p>
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        {mode === "form" ? (account.id ? "Edit" : "Tambah") : ""} Data <span className="text-themeTeal">Akun</span>
+      </p>
       {mode === "form" ? (
         <form
           className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16"
