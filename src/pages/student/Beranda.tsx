@@ -4,34 +4,35 @@ import icon_check from '../../assets/icon_check.svg';
 import icon_formIzin from '../../assets/icon_formIzin.svg';
 import { Link } from 'react-router-dom';
 import { PiStudentLight } from 'react-icons/pi';
+import { AiOutlineForm } from "react-icons/ai";
 import { userContext } from './Index';
 
 function Beranda() {
     const userData = useContext(userContext);
     return (
         <div className='flex flex-col md:flex-row w-full -mt-24'>
-            <div className='bg-[#26B673]/10 w-full md:w-6/12'>
-                <div className='flex flex-col  items-center border-b border-black py-16'>
-                    <div className='bg-[#192B1F]/20 w-fit p-12 rounded-full mb-6'>
+            <div className='bg-themeMilk2 shadow w-full md:w-1/3'>
+                <div className='flex flex-col  items-center border-b border-black pt-16'>
+                    <div className='bg-[#192B1F]/20 w-fit p-3 rounded-full mb-5'>
                         <PiStudentLight className="text-7xl mx-auto" />
                     </div>
                     <p className='text-2xl font-semibold'>{userData.name}</p>
-                    <p className='text-2xl font-semibold mb-12'>{userData.nis}</p>
-                    <div className='mb-2 flex gap-4 justify-start w-80'>
+                    <p className='text-2xl font-semibold mb-6'>{userData.nis}</p>
+                    <div className='mb-2 flex gap-4 justify-start w-80 px-2'>
                         <div className='flex justify-between w-40'>
                             <p>Jenis Kelamin</p>
                             <p>:</p>
                         </div>
                         <p>{userData.gender ? 'Laki-laki' : 'Perempuan'}</p>
                     </div>
-                    <div className='mb-2 flex gap-4 justify-start w-80'>
+                    <div className='mb-2 flex gap-4 justify-start w-80 px-2'>
                         <div className='flex justify-between w-40'>
                             <p>Status</p>
                             <p>:</p>
                         </div>
                         <p>{userData.is_active ? 'Santri Aktif' : 'Tidak Aktif'}</p>
                     </div>
-                    <div className='mb-8 flex gap-4 justify-start w-80'>
+                    <div className='mb-8 flex gap-4 justify-start w-80 px-2'>
                         <div className='flex justify-between w-40'>
                             <p>Kelas</p>
                             <p>:</p>
@@ -39,13 +40,13 @@ function Beranda() {
                         <p>{userData.class_name}</p>
                     </div>
                 </div>
-                <div className='flex flex-col items-center py-8'>
+                <div className='flex flex-col items-center py-3'>
                     <p>Santri</p>
                     <p>Angkatan {userData.grade}</p>
                     <p>PPM BINA KHOIRUL INSAN SEMARANG</p>
                 </div>
             </div>
-            <div className='flex flex-col py-16 w-full md:w-6/12 items-center'>
+            <div className='flex flex-col py-12 w-full md:w-full items-center'>
                 <p className="font-bold text-xl md:text-3xl mb-16">Fitur <span className="text-themeTeal">Presensi</span></p>
                 <Link to='/santri/jadwalKelas'>
                     <div className="flex items-center w-96 h-24 justify-around py-4 px-7 bg-themeTeal/20 rounded-xl shadow-md mb-12">

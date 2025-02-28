@@ -55,9 +55,10 @@ function Student() {
     return (
         <userContext.Provider value={userData}>
             <div className="flex flex-col items-center justify-start relative text-lg">
-                <Navbar className="bg-themeTeal mb-24" manageClass={classes.length >= 1}/>
+                
+                <Navbar className="bg-milkyWhite mb-24" manageClass={classes.length >= 1}/>
                 <Outlet />
-                <Footer />
+                {/* <Footer /> */}
             </div>
         </userContext.Provider>
     );

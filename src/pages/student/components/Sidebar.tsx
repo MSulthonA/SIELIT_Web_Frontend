@@ -13,9 +13,40 @@ import { AppContext } from "../../../AppContext";
 
 interface SidebarProps {
   isMinimized: boolean;
-  
   toggleSidebar: () => void;
+  className?: string;
+  manageClass?: boolean;
 }
+
+function useOutsideAlerter(ref, isExpanded, setIsExpanded) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsExpanded(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [ref]);
+}
+
+function Sidebar({ className, manageClass }: SidebarProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const setToken = useContext(AppContext).token.set;
+  const location = useLocation();
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, isExpanded, setIsExpanded);
+  console.log(manageClass);
 
 const Sidebar: React.FC<SidebarProps> = ({ isMinimized, toggleSidebar }) => {
   // const [isMinimized, setIsMinimized] = useState(true);
@@ -69,72 +100,60 @@ const Sidebar: React.FC<SidebarProps> = ({ isMinimized, toggleSidebar }) => {
         </button>
         <nav className="flex-1">
           <ul>
-            <Link to="/admin/dataSantri">
+            <Link to="/santri/beranda">
               <li className={`p-3 mt-2 mx-2 mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/dataSantri" ? "bg-themeSilver shadow" : ""}`}>
                 <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/dataSantri" ? "text-themeTeal font-semibold" : ""}`}>
                   <IoPeople className="" />
-                  {isMinimized ? null : <span className="ml-2">Data Santri</span>}
+                  {isMinimized ? null : <span className="ml-2">Beranda</span>}
                 </a>
               </li>
             </Link>
-            <Link to="/admin/dataAkun">
+            <Link to="/santri/riwayatPresensi">
               <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver hover:text-themeTeal ${location.pathname === "/admin/dataAkun" ? "bg-themeSilver shadow" : ""}`}>
                 <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/dataAkun" ? "text-themeTeal font-semibold" : ""}`}>
                   <HiUser className="" />
-                  {isMinimized ? null : <span className="ml-2">Data Akun</span>}
-                </a>
-              </li>
-            </Link>
-            <Link to="/admin/dataRiwayatPresensi">
-              <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/dataRiwayatPresensi" ? "bg-themeSilver shadow" : ""}`}>
-                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/dataRiwayatPresensi" ? "text-themeTeal font-semibold" : ""}`}>
-                  <FaCalendarDays className="" />
                   {isMinimized ? null : <span className="ml-2">Riwayat Presensi</span>}
                 </a>
               </li>
             </Link>
-            <hr className="border-gray-400 " />
-            <Link to="/admin/jadwalKelas">
-              <li className={` p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/jadwalKelas" ? "bg-themeSilver shadow" : ""} justify-center`}>
-                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/jadwalKelas" ? "text-themeTeal font-semibold" : ""}`}>
-                  <MdClass className="" />
+            <Link to="/santri/jadwalKelas">
+              <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/dataRiwayatPresensi" ? "bg-themeSilver shadow" : ""}`}>
+                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/dataRiwayatPresensi" ? "text-themeTeal font-semibold" : ""}`}>
+                  <FaCalendarDays className="" />
                   {isMinimized ? null : <span className="ml-2">Jadwal Kelas</span>}
                 </a>
               </li>
             </Link>
-            <Link to="/admin/bypassPresensi">
+            <hr className="border-gray-400 " />
+            <Link to="/santri/formPerizinan">
+              <li className={` p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/jadwalKelas" ? "bg-themeSilver shadow" : ""} justify-center`}>
+                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/jadwalKelas" ? "text-themeTeal font-semibold" : ""}`}>
+                  <MdClass className="" />
+                  {isMinimized ? null : <span className="ml-2">Form Perizinan</span>}
+                </a>
+              </li>
+            </Link>
+            <Link to="/santri/editProfil">
               <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/bypassPresensi" ? "bg-themeSilver shadow" : ""}`}>
                 <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/bypassPresensi" ? "text-themeTeal font-semibold" : ""}`}>
                   <FaCalendarCheck className="" />
-                  {isMinimized ? null : <span className="ml-2">Bypass Presensi</span>}
+                  {isMinimized ? null : <span className="ml-2">Edit Profil</span>}
                 </a>
               </li>
             </Link>
-            <Link to="/admin/rekapPresensi">
-              <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/rekapPresensi" ? "bg-themeSilver shadow" : ""}`}>
-                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/rekapPresensi" ? "text-themeTeal font-semibold" : ""}`}>
-                  <FaCheckDouble className="" />
-                  {isMinimized ? null : <span className="ml-2">Rekap Presensi</span>}
-                </a>
-              </li>
-            </Link>
-            <Link to="/admin/dataPerizinan">
-              <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/dataPerizinan" ? "bg-themeSilver shadow" : ""}`}>
-                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/dataPerizinan" ? "text-themeTeal font-semibold" : ""}`}>
-                  <FaFileCircleCheck className="" />
-                  {isMinimized ? null : <span className="ml-2">Data Perizinan</span>}
-                </a>
-              </li>
-            </Link>
+            {manageClass ? (
+                <Link to="/santri/manageClass">
+                    <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/bypassPresensi" ? "bg-themeSilver shadow" : ""}`}>
+                        <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/bypassPresensi" ? "text-themeTeal font-semibold" : ""}`}>
+                            <FaCalendarCheck className="" />
+                            {isMinimized ? null : <span className="ml-2">Edit Profil</span>}
+                        </a>
+                    </li>
+                </Link>
+            ) : (
+            <></>
+            )}
             <hr className="border-gray-400" />
-            <Link to="/admin/perangkat">
-              <li className={`p-3 mt-2 mx-2  mb-2 rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/perangkat" ? "bg-themeSilver shadow" : ""}`}>
-                <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-gray-800 ${location.pathname === "/admin/perangkat" ? "text-themeTeal font-semibold" : ""}`}>
-                  <BsFillDeviceSsdFill className="" />
-                  {isMinimized ? null : <span className="ml-2">Perangkat</span>}
-                </a>
-              </li>
-            </Link>
             <li className={`p-3 mt-2 mb-2 mx-2  rounded-xl hover:bg-themeSilver ${location.pathname === "/admin/logout" ? "bg-themeSilver shadow" : ""}`}>
               <a href="#" className={`flex items-center ${isMinimized ? "justify-center" : "justify-start"} text-base text-red-500 ${location.pathname === "/admin/logout" ? "text-themeTeal font-semibold" : ""}`} onClick={logout}>
                 <IoLogOut className="" />
@@ -147,5 +166,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isMinimized, toggleSidebar }) => {
     </div>
   );
 };
+
 
 export default Sidebar;

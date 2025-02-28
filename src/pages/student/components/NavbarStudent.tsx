@@ -1,8 +1,8 @@
-import Logo from "../../../assets/logo.png";
+import logggo from "../../../assets/logggo.png";
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { BiLogOut } from "react-icons/bi";
+import { IoLogOut } from "react-icons/io5";
 import { AppContext } from "../../../AppContext";
 import Swal from "sweetalert2";
 import React, { useRef, useEffect } from "react";
@@ -63,14 +63,17 @@ function Navbar({ className, manageClass }: NavbarProps) {
   }
 
   return (
-    <nav className={`h-28 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${className}`}>
+    <nav className={`h-16 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${className}`}>
+      <Link to="/santri/beranda">
       <div className="flex items-center">
-        <img src={Logo} alt="Logo PPM" className="w-16 mr-3" />
+        <img src={logggo} alt="Logo PPM" className="w-14 mr-3" />
         <div>
-          <p className="text-themeYellow font-bold text-xl md:text-2xl text-outline">SI ELIT</p>
-          <p className="text-sm md:text-base">Pondok Pesantren Bina Khoirul Insan</p>
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-base font-semibold bg-gradient-to-r from-[#13A89D] to-[#C7D021] text-transparent bg-clip-text tracking-wide drop-shadow-md">
+              Sistem Smart Electronic Identification
+            </p>
         </div>
       </div>
+      </Link>
       <RxHamburgerMenu
         fontSize="28px"
         className={`xl:hidden ml-8`}
@@ -78,7 +81,7 @@ function Navbar({ className, manageClass }: NavbarProps) {
           setIsExpanded((prev) => !prev);
         }}
       />
-      <div className={`hidden xl:flex w-4/12 ${manageClass ? "min-w-[930px]" : "min-w-[800px]"} text-xl justify-between items-center`}>
+      <div className={`hidden xl:flex w-4/12 ${manageClass ? "min-w-[930px]" : "min-w-[800px]"} pl-10 text-base font-medium justify-between items-center`}>
         <Link to="/santri/beranda" className={`cursor-pointer ${!["riwayatPresensi", "jadwalKelas", "formPerizinan", "editProfil", "manageClass"].includes(location.pathname.split("/")[2]) ? "font-bold" : ""}`}>
           Beranda
         </Link>
@@ -101,7 +104,7 @@ function Navbar({ className, manageClass }: NavbarProps) {
         ) : (
           <></>
         )}
-        <BiLogOut className="cursor-pointer" fontSize="28px" onClick={logout} />
+        <IoLogOut className="cursor-pointer" fontSize="28px" onClick={logout} />
       </div>
       <div className={`${isExpanded ? "flex" : "hidden"} text-base justify-between bg-white px-12 py-8 flex-col gap-8 absolute top-24 right-8 shadow-lg rounded-md`} ref={wrapperRef}>
         <Link
