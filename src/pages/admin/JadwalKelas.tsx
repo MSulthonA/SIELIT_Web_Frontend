@@ -340,8 +340,10 @@ function JadwalKelas() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center w-full pt-4 pb-16 grow overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">{mode === "form" ? (kelas.id ? "Edit" : "Tambah") : ""} Jadwal Kelas</p>
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        {mode === "form" ? (kelas.id ? "Edit" : "Tambah") : ""} Jadwal <span className="text-themeTeal">Kelas</span>
+      </p>
 
       {mode === "form" ? (
         <form
@@ -396,10 +398,10 @@ function JadwalKelas() {
           <SelectInput title="Pengurus" name="manager_id" value={kelas.manager_id} onChange={handleChange} errorMsg={kelas.manager_idErr} values={students} />
           <SelectInput title="Tipe kelas" name="type" value={kelas.type} onChange={handleChange} errorMsg={kelas.typeErr} values={classTypes.map((ct) => ({ value: ct.id, label: ct.name }))} />{" "}
           <SelectInput title="Guru" name="teacher_id" value={kelas.teacher_id} onChange={handleChange} errorMsg={kelas.teacher_idErr} values={teachers} />
-          <div className="self-end justify-between flex">
+          <div className="self-end justify-between flex flex-col lg:flex-row gap-2 lg:gap-0">
             <button
               type="button"
-              className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
+              className="bg-[#d9d9d9] w-36 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm"
               onClick={() => {
                 setKelas(initialKelas);
                 setMode("view");
@@ -407,7 +409,7 @@ function JadwalKelas() {
             >
               Batal
             </button>
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200">
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm w-36 py-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>
@@ -417,7 +419,7 @@ function JadwalKelas() {
           <div className="w-full flex justify-between flex-col xl:flex-row">
             <div className=" ">
               <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md mb-4" inputClassName="bg-white" value={search.string} />
-              <div className="flex gap-4 flex-col md:flex-row ">
+              <div className="flex gap-4 flex-col xl:flex-row xl:items-center">
                 <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
                 <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
                 <button className="bg-themeTeal text-white text-sm mb-4 font-semibold px-4 py-2 h-full rounded" onClick={getClasses}>

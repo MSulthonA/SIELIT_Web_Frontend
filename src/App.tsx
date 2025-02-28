@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AppContext } from "./AppContext";
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from "chart.js";
+
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
 //pages
 import Landing from "./pages/landing/Index";
@@ -36,6 +39,7 @@ import BypassPresensi from "./pages/admin/BypassPresensi";
 import RekapPresensi from "./pages/admin/RekapPresensi";
 import Perangkat from "./pages/admin/Perangkat";
 import DataPerizinan from "./pages/admin/DataPerizinan";
+import KalenderAkademik from "./pages/admin/KalenderAkademik";
 
 //components
 import Loading from "./components/Loading";
@@ -90,6 +94,7 @@ function App() {
             <Route path="rekapPresensi" element={<RekapPresensi />}></Route>
             <Route path="perangkat" element={<Perangkat />}></Route>
             <Route path="dataPerizinan" element={<DataPerizinan />}></Route>
+            <Route path="kalenderAkademik" element={<KalenderAkademik />}></Route>
           </Route>
         </Routes>
       </Router>

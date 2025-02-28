@@ -43,8 +43,10 @@ function Perangkat() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow overflow-x-scroll">
-      <p className="font-bold text-xl md:text-3xl mb-16">Status Perangkat</p>
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
+      <p className="font-bold text-xl md:text-3xl mb-16">
+        Status <span className="text-themeTeal">Perangkat</span>
+      </p>
       <div className="rounded-lg overflow-x-scroll overflow-y-scroll max-h-96 no-scrollbar mb-24">
         <table className="w-full text-left h-12 text-sm">
           <thead className="bg-themeTeal text-white sticky top-0">

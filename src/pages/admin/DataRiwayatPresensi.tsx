@@ -87,12 +87,12 @@ function DataRiwayatPresensi() {
   }
 
   return (
-    <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow w-full">
+    <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
       <p className="font-bold text-xl md:text-3xl mb-16">
         Riwayat <span className="text-themeTeal">Presensi</span>
       </p>
       <div className="w-full flex justify-between flex-col xl:flex-row mb-4">
-        <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md md:mb-0" inputClassName="bg-white" value={search.string} />
+        <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md " inputClassName="bg-white" value={search.string} />
         <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
         <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
         <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 mt-3 h-fit rounded" onClick={getAttendances}>
