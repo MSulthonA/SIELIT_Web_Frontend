@@ -318,7 +318,7 @@ function DataAkun() {
           <div className="justify-center items-center flex flex-col md:flex-row">
             <button
               type="button"
-              className="bg-[#d9d9d9] px-12 py-2 mb-3 rounded mx-2 hover:scale-[1.03] font-semibold text-sm"
+              className="bg-[#d9d9d9] w-36 py-2 mb-3 rounded mx-2 hover:scale-[1.03] font-semibold text-sm"
               onClick={() => {
                 setaccount(initialaccount);
                 setMode("view");
@@ -326,7 +326,7 @@ function DataAkun() {
             >
               Batal
             </button>
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 mb-3 mx-2 rounded hover:scale-[1.03] transition-all duration-200">
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm w-36 py-2 mb-3 mx-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>

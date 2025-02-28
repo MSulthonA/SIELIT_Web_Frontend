@@ -250,10 +250,10 @@ function KalenderAkademik() {
           {/* <TextInput name="type" value={calendar.type} title="Tipe" onChange={(e) => setCalendar({ ...calendar, type: e.target.value })} className="mb-8" inputClassName="bg-white" />
           <TextInput name="color" value={calendar.color} title="Warna" onChange={(e) => setCalendar({ ...calendar, color: e.target.value })} className="mb-8" inputClassName="bg-white" /> */}
           <div className="justify-center items-center flex flex-col md:flex-row">
-            <button type="button" className="bg-[#d9d9d9] px-12 py-2 mb-3 rounded mx-2 hover:scale-[1.03] font-semibold text-sm" onClick={() => setMode("view")}>
+            <button type="button" className="bg-[#d9d9d9] w-36 py-2 mb-3 rounded mx-2 hover:scale-[1.03] font-semibold text-sm" onClick={() => setMode("view")}>
               Batal
             </button>
-            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm px-12 py-2 mb-3 mx-2 rounded hover:scale-[1.03] transition-all duration-200">
+            <button type="submit" className="bg-themeTeal text-white font-semibold text-sm w-36 py-2 mb-3 mx-2 rounded hover:scale-[1.03] transition-all duration-200">
               Submit
             </button>
           </div>
@@ -275,8 +275,8 @@ function KalenderAkademik() {
                   <th className="pl-6 py-2">Judul</th>
                   <th className="pl-6 py-2">Waktu</th>
                   <th className="pl-6 py-2">Lokasi</th>
-                  <th className="pl-6 py-2">Tipe</th>
-                  <th className="pl-6 py-2">Warna</th>
+                  {/* <th className="pl-6 py-2">Tipe</th>
+                  <th className="pl-6 py-2">Warna</th> */}
                   <th className="pl-6 py-2">Aksi</th>
                 </tr>
               </thead>
@@ -290,12 +290,12 @@ function KalenderAkademik() {
                         <td className="pl-6 py-2">{calendar.title || "No Title"}</td>
                         <td className="pl-6 py-2">{calendar.time || "No Time"}</td>
                         <td className="pl-6 py-2">{calendar.location || "No Location"}</td>
-                        <td className="pl-6 py-2">{calendar.type || "No Type"}</td>
+                        {/* <td className="pl-6 py-2">{calendar.type || "No Type"}</td>
                         <td className="pl-6 py-2">
                           <span style={{ backgroundColor: calendar.color }} className="px-2 py-1 rounded">
                             {calendar.color || "No Color"}
                           </span>
-                        </td>
+                        </td> */}
                         <td className="px-3 py-2 flex justify-center gap-2">
                           <button
                             className="bg-themeOrange text-white px-2 py-1 rounded"
