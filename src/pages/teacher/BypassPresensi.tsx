@@ -116,7 +116,7 @@ function BypassPresensi() {
             <p className="font-bold text-xl md:text-3xl mb-16">Bypass <span className="text-themeTeal">Presensi</span></p>
             <div className="w-full flex flex-col md:flex-row justify-between mb-4">
                 <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search} />
-                <SelectInput name="class" title="Pilih kelas" errorMsg="" onChange={(e: any) => { setSelectedClassId(e.target.value); getAttendances() }} className="w-full ml-4" value={selectedClassId} values={classes} />
+                <SelectInput name="class" title="Pilih kelas" errorMsg="" onChange={(e: any) => { setSelectedClassId(e.target.value); getAttendances() }} className="w-full md:ml-4" value={selectedClassId} values={classes} />
             </div>
             <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-[700px] no-scrollbar mb-24 w-full">
                 <table className="w-full h-12 text-center">
