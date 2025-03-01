@@ -10,7 +10,7 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = ({ name, startDate, endDate, namaHari }) => {
   return (
-    <div className="flex items-center w-full md:w-80 h-28 justify-around py-4 px-5 bg-themeTeal/20 rounded-xl shadow-md mb-4 md:mb-4">
+    <div className="flex items-center w-64 md:w-80 h-28 justify-around py-4 px-5 bg-themeTeal/20 rounded-xl shadow-md mb-4 md:mb-4">
       <div className="flex flex-col items-start">
         <div className='flex flex-row justify-center items-center'>
           <FaBook className='text-gray-700 text-base'/>

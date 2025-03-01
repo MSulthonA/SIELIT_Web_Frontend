@@ -77,52 +77,56 @@ function Beranda() {
       });
   }
 
-  function handleSearch(e: any) {
-    console.log(e.target.value);
-    setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
+  // function handleSearch(e: any) {
+  //   console.log(e.target.value);
+  //   setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // }
 
   return (
-    <div className={`flex flex-col md:flex-row w-full -mt-10 md:-mt-24 md:left-0 left-10 `}>
-      <div className='bg-white shadow w-auto rounded-md m-3 p-2'>
-        <div className='flex flex-col  items-center border-b border-black pt-16'>
-          <div className='bg-[#192B1F]/20 w-fit p-3 rounded-full mb-5'>
-            <PiStudentLight className="text-7xl mx-auto" />
+    <div className="flex flex-col md:flex-row w-full -mt-10 md:-mt-24 md:left-0 left-10 overflow-x-hidden">
+      <div className='bg-white shadow w-[225px] md:w-full rounded-md m-3 p-2'>
+        <div className='flex flex-col items-center justify-center border-b border-black pt-16'>
+          <div className='bg-[#192B1F]/20 w-fit p-2 md:p-3 rounded-full mb-3 md:mb-5'>
+            <PiStudentLight className="text-6xl md:text-7xl mx-auto" />
           </div>
-          <p className='text-2xl font-semibold'>{userData.name}</p>
-          <p className='text-2xl font-semibold mb-6'>{userData.nis}</p>
-          <div className='mb-2 flex gap-4 justify-start w-80 px-2'>
-            <div className='flex justify-between w-40'>
-              <p>Jenis Kelamin</p>
-              <p>:</p>
-            </div>
-            <p>{userData.gender ? 'Laki-laki' : 'Perempuan'}</p>
+          <div className="flex flex-col align-middle items-center justify-center">
+          <p className='text-base md:text-2xl font-semibold'>{userData.name}</p>
+          <p className='text-base md:text-2xl font-semibold mb-6'>{userData.nis}</p>
           </div>
-          <div className='mb-2 flex gap-4 justify-start w-80 px-2'>
-            <div className='flex justify-between w-40'>
-              <p>Status</p>
-              <p>:</p>
+          <div className='flex flex-col justify-start'>
+            <div className='mb-2 flex flex-col md:flex-row items-center gap-0 md:gap-4 justify-center md:justify-start'>
+              <div className='flex text-sm md:text-lg justify-center md:justify-between w-40'>
+                <p className="font-semibold md:font-normal">Jenis Kelamin</p>
+                <p className='hidden md:block'>:</p>
+              </div>
+              <p className='text-sm md:text-lg'>{userData.gender ? 'Laki-laki' : 'Perempuan'}</p>
             </div>
-            <p>{userData.is_active ? 'Santri Aktif' : 'Tidak Aktif'}</p>
+            <div className='mb-2 flex flex-col md:flex-row items-center gap-0 md:gap-4 justify-center md:justify-start'>
+              <div className='flex text-sm md:text-lg justify-center md:justify-between w-40'>
+                <p className="font-semibold md:font-normal">Status</p>
+                <p className='hidden md:block'>:</p>
+              </div>
+              <p className='text-sm md:text-lg'>{userData.is_active ? 'Santri Aktif' : 'Tidak Aktif'}</p>
+            </div>
+            <div className='mb-2 flex flex-col md:flex-row items-center gap-0 md:gap-4 justify-center md:justify-start'>
+            <div className='flex text-sm md:text-lg justify-center md:justify-between w-40'>
+              <p className="font-semibold md:font-normal">Kelas</p>
+              <p className='hidden md:block'>:</p>
+            </div>
+            <p className='text-sm md:text-lg'>{userData.class_name}</p>
           </div>
-          <div className='mb-8 flex gap-4 justify-start w-80 px-2'>
-            <div className='flex justify-between w-40'>
-              <p>Kelas</p>
-              <p>:</p>
-            </div>
-            <p>{userData.class_name}</p>
           </div>
         </div>
-        <div className='flex flex-col items-center py-3'>
+        <div className='flex text-sm md:text-lg flex-col items-center align-middle justify-center py-3'>
           <p>Santri</p>
           <p>Angkatan {userData.grade}</p>
-          <p>PPM BINA KHOIRUL INSAN SEMARANG</p>
+          <p className='hidden md:block'>PPM BINA KHOIRUL INSAN SEMARANG</p>
         </div>
       </div>
       <div className='flex flex-col md:flex-row pt-3'>
-        <div className="flex flex-col p-5 flex-1 bg-white shadow-md rounded-md">
-          <p className="font-bold text-xl md:text-3xl  pr-7">Pengajian</p>
-          <span className="font-bold text-xl md:text-3xl text-themeTeal mb-4">Yang akan datang</span>
+        <div className="flex flex-col w-28 w-[225px] md:w-auto p-5 mx-3 md:mx-0 flex-1 bg-white shadow-md rounded-md">
+          <p className="font-bold text-xl md:text-3xl pr-7">Pengajian</p>
+          <span className="font-bold text-lg md:text-2xl text-themeTeal mb-4">Yang akan datang</span>
           <div className="flex flex-col overflow-y-auto max-h-96">
             {upcomingClasses.length === 0 ? (
               <Card name="Tidak ada kelas" />
