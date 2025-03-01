@@ -63,7 +63,7 @@ function Navbar({ className, manageClass }: NavbarProps) {
   }
 
   return (
-    <nav className={`h-16 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${className}`}>
+    <nav className={`h-16 z-30 flex items-center w-full shadow-md justify-between px-8 md:px-16 sticky top-0 ${className}`}>
       <Link to="/santri/beranda">
       <div className="flex items-center">
         <img src={logggo} alt="Logo PPM" className="w-14 mr-3" />
