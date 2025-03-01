@@ -77,10 +77,15 @@ function Beranda() {
       });
   }
 
-  // function handleSearch(e: any) {
-  //   console.log(e.target.value);
-  //   setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  // }
+  function handleSearch(e: any) {
+    console.log(e.target.value);
+    setSearch((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  function truncateName(name: string): string {
+    const words = name.split(' ');
+    return words.slice(0, 3).join(' ');
+  }
 
   return (
     <div className="flex flex-col md:flex-row w-full -mt-10 md:-mt-24 md:left-0 left-10 overflow-x-hidden">
@@ -90,8 +95,8 @@ function Beranda() {
             <PiStudentLight className="text-6xl md:text-7xl mx-auto" />
           </div>
           <div className="flex flex-col align-middle items-center justify-center">
-          <p className='text-sm md:text-2xl font-semibold'>{userData.name}</p>
-          <p className='text-sm md:text-2xl font-semibold mb-6'>{userData.nis}</p>
+            <p className='text-sm md:text-2xl truncate font-semibold'>{truncateName(userData.name)}</p>
+            <p className='text-sm md:text-2xl font-semibold mb-6'>{userData.nis}</p>
           </div>
           <div className='flex flex-col justify-start'>
             <div className='mb-2 flex flex-col md:flex-row items-center gap-0 md:gap-4 justify-center md:justify-start'>
@@ -109,12 +114,12 @@ function Beranda() {
               <p className='text-sm md:text-lg'>{userData.is_active ? 'Santri Aktif' : 'Tidak Aktif'}</p>
             </div>
             <div className='mb-2 flex flex-col md:flex-row items-center gap-0 md:gap-4 justify-center md:justify-start'>
-            <div className='flex text-sm md:text-lg justify-center md:justify-between w-40'>
-              <p className="font-semibold md:font-normal">Kelas</p>
-              <p className='hidden md:block'>:</p>
+              <div className='flex text-sm md:text-lg justify-center md:justify-between w-40'>
+                <p className="font-semibold md:font-normal">Kelas</p>
+                <p className='hidden md:block'>:</p>
+              </div>
+              <p className='text-sm md:text-lg'>{userData.class_name}</p>
             </div>
-            <p className='text-sm md:text-lg'>{userData.class_name}</p>
-          </div>
           </div>
         </div>
         <div className='flex text-sm md:text-lg flex-col items-center align-middle justify-center py-3'>
