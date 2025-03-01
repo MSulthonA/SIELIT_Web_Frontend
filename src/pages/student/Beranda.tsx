@@ -90,8 +90,8 @@ function Beranda() {
             <PiStudentLight className="text-6xl md:text-7xl mx-auto" />
           </div>
           <div className="flex flex-col align-middle items-center justify-center">
-          <p className='text-base md:text-2xl font-semibold'>{userData.name}</p>
-          <p className='text-base md:text-2xl font-semibold mb-6'>{userData.nis}</p>
+          <p className='text-sm md:text-2xl font-semibold'>{userData.name}</p>
+          <p className='text-sm md:text-2xl font-semibold mb-6'>{userData.nis}</p>
           </div>
           <div className='flex flex-col justify-start'>
             <div className='mb-2 flex flex-col md:flex-row items-center gap-0 md:gap-4 justify-center md:justify-start'>
