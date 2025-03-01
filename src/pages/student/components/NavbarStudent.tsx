@@ -10,27 +10,27 @@ import React, { useRef, useEffect } from "react";
 /**
  * Hook that alerts clicks outside of the passed ref
  */
-function useOutsideAlerter(ref, isExpanded, setIsExpanded) {
-  useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsExpanded(false);
-      }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+// function useOutsideAlerter(ref, isExpanded, setIsExpanded) {
+//   useEffect(() => {
+//     /**
+//      * Alert if clicked on outside of element
+//      */
+//     function handleClickOutside(event) {
+//       if (ref.current && !ref.current.contains(event.target)) {
+//         setIsExpanded(false);
+//       }
+//     }
+//     // Bind the event listener
+//     document.addEventListener("mousedown", handleClickOutside);
 
-    document.addEventListener("touchstart", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
-    };
-  }, [ref]);
-}
+//     document.addEventListener("touchstart", handleClickOutside);
+//     return () => {
+//       // Unbind the event listener on clean up
+//       document.removeEventListener("mousedown", handleClickOutside);
+//       document.removeEventListener("touchstart", handleClickOutside);
+//     };
+//   }, [ref]);
+// }
 
 type NavbarProps = {
   className?: string;
@@ -42,7 +42,7 @@ function Navbar({ className, manageClass }: NavbarProps) {
   const setToken = useContext(AppContext).token.set;
   const location = useLocation();
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, isExpanded, setIsExpanded);
+  // useOutsideAlerter(wrapperRef, isExpanded, setIsExpanded);
   console.log(manageClass);
 
   function logout() {
