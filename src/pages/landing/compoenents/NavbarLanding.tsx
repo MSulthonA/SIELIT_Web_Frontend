@@ -35,9 +35,25 @@ function Navbar({className}: NavbarProps) {
     const location = useLocation();
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef, setIsExpanded);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
 
     return (
-        <nav className={`h-20 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${className}`}>
+        <nav className={`h-20 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${isScrolled ? className : 'bg-transparent'} transition-all ease-in-out duration-300`}>
        <div className="flex items-center">
         <img src={logggo} alt="Logo PPM" className="w-16 mr-3" />
         <div>
