@@ -79,7 +79,7 @@ function Navbar({ className, manageClass }: NavbarProps) {
           setIsExpanded((prev) => !prev);
         }}
       />
-      <div className={`hidden xl:flex w-4/12 ${manageClass ? "min-w-[930px]" : "min-w-[800px]"} pl-10 text-base font-medium justify-between items-center`}>
+      <div className={`hidden xl:flex w-4/12 ${manageClass ? "min-w-[930px]" : "min-w-[800px]"} pl-10 text-base font-medium justify-end gap-8 items-center`}>
         <Link to="/guru/bypassPresensi" className={`cursor-pointer ${location.pathname.split("/")[2] == "bypassPresensi" ? "font-bold" : ""}`}>
           Bypass Presensi
         </Link>

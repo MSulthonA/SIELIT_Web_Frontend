@@ -98,9 +98,9 @@ function DataPerizinan() {
     }
 
     return (
-        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12">
+        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12 overflow-x-scroll">
             <p className="font-bold text-xl md:text-3xl mb-16">Data <span className="text-themeTeal">Perizinan</span></p>
-            <div className="w-full flex justify-between mb-4">
+            <div className="w-full flex flex-col md:flex-row justify-between mb-4">
                 <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search.string} />
                 <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate} />
                 <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate} />
@@ -114,11 +114,11 @@ function DataPerizinan() {
                             <th className="py-2">NIS</th>
                             <th className="py-2">Nama</th>
                             <th className="py-2">Kelas</th>
-                            <th className="py-2">Pengajian</th>
-                            <th className="py-2">Tanggal</th>
+                            <th className="py-2 hidden md:table-cell">Pengajian</th>
+                            <th className="py-2 hidden md:table-cell">Tanggal</th>
                             <th className="py-2">Alasan</th>
                             <th className="py-2">Bukti</th>
-                            <th className="py-2">Status</th>
+                            <th className="py-2 hidden md:table-cell">Status</th>
                             <th className="pr-6 py-2">Aksi</th>
                         </tr>
                     </thead>
@@ -133,8 +133,8 @@ function DataPerizinan() {
                                         <td className="py-2">{permit.nis}</td>
                                         <td className="py-2">{permit.name.length > 24 ? permit.name.substring(0, 24) + '...' : permit.name}</td>
                                         <td className="py-2">{permit.class_type}</td>
-                                        <td className="py-2">{startDate.getHours() > 13 ? startDate.getHours() > 18 ? 'Malam' : 'Sore' : 'Pagi'}</td>
-                                        <td className="py-2">{startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '')}</td>
+                                        <td className="py-2 hidden md:table-cell">{startDate.getHours() > 13 ? startDate.getHours() > 18 ? 'Malam' : 'Sore' : 'Pagi'}</td>
+                                        <td className="py-2 hidden md:table-cell">{startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '')}</td>
                                         <td>{permit.description}</td>
                                         <td>
                                             <a href={`${appSettings.api}${permit.img_url}`} target="_blank" rel="noreferrer noopener">

@@ -112,9 +112,9 @@ function BypassPresensi() {
     }
 
     return (
-        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12">
+        <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-12 overflow-x-scroll">
             <p className="font-bold text-xl md:text-3xl mb-16">Bypass <span className="text-themeTeal">Presensi</span></p>
-            <div className="w-full flex justify-between mb-4">
+            <div className="w-full flex flex-col md:flex-row justify-between mb-4">
                 <TextInput name="search" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search} />
                 <SelectInput name="class" title="Pilih kelas" errorMsg="" onChange={(e: any) => { setSelectedClassId(e.target.value); getAttendances() }} className="w-full ml-4" value={selectedClassId} values={classes} />
             </div>
@@ -122,11 +122,11 @@ function BypassPresensi() {
                 <table className="w-full h-12 text-center">
                     <thead className="bg-themeTeal text-white sticky top-0 text-sm">
                         <tr>
-                            <th className="pl-6 py-2">No</th>
-                            <th className="pl-6 py-2">NIS</th>
+                            <th className="pl-6 py-2 hidden md:table-cell">No</th>
+                            <th className="pl-6 py-2 hidden md:table-cell">NIS</th>
                             <th className="pl-6 py-2">Nama</th>
-                            <th className="pl-6 py-2">Kelas</th>
-                            <th className="pl-6 py-2">Tanggal</th>
+                            <th className="pl-6 py-2 hidden md:table-cell">Kelas</th>
+                            <th className="pl-6 py-2 hidden md:table-cell">Tanggal</th>
                             <th className="pl-6 py-2">Keterangan</th>
                             <th className="px-6 py-2">Aksi</th>
                         </tr>

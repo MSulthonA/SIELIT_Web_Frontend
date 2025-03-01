@@ -37,9 +37,11 @@ function Teacher() {
     <userContext.Provider value={userData}>
       <div className="flex flex-col items-center justify-start relative text-lg">
         {!isMobile && <Navbar className="bg-milkyWhite" />}
-        <div className="items-start w-full min-h-[100svh]">
+        <div className={`flex w-full min-h-[100svh] ${isMobile ? (isMinimized ? 'ml-16' : 'ml-60') : ''}`}>
           {isMobile && <Sidebar isMinimized={isMinimized} toggleSidebar={toggleSidebar} isMobile={isMobile} />}
-          <Outlet />
+          <main className="flex-1 p-4">
+            <Outlet />
+          </main>
         </div>
         <div className="md:hidden py-24">
           {/* <BypassPresensidanPerizinanMobile /> */}
