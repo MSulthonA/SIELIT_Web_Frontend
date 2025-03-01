@@ -182,7 +182,7 @@ function FormPerizinan() {
 
         {formIzin.img && <img src={formIzin.img} alt="Preview" className="max-h-96 w-fit mx-auto" />}
         <div className="flex flex-col md:flex-row self-end mt-4">
-          <input type="file" name="img_file" onChange={handleChange} accept=".jpg,.jpeg,.png" className="block w-full md:w-80 text-sm file:bg-themeTeal file:text-white file:cursor-pointer" />
+          <input type="file" name="img_file" onChange={handleChange} accept=".jpg,.jpeg,.png" className="block w-full md:w-80 text-sm py-2 file:bg-themeTeal file:text-white file:cursor-pointer" />
           <button type="submit" className="bg-themeTeal text-white font-semibold px-12 py-2 rounded hover:scale-105 transition-all duration-200">
             Submit
           </button>

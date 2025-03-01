@@ -15,6 +15,7 @@ import { BiCalendarStar } from "react-icons/bi";
 
 interface SidebarProps {
   isMinimized: boolean;
+  
   toggleSidebar: () => void;
 }
 
