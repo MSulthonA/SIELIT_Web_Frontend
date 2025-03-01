@@ -337,21 +337,20 @@ function RekapPresensi() {
                   <th className="py-2 px-4 border border-white" rowSpan={4}>
                     Gender
                   </th>
-                  {Object.keys(recap).length &&
-                    recap[Object.keys(recap)[0]]
-                      .slice()
-                      .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Urutkan ascending
-                      .map((el: any) => {
-                        const start = new Date(el.week_start).getDate();
-                        const end = new Date(el.week_end).getDate();
-                        const month_start = new Date(el.week_start).toLocaleString("default", { month: "short" });
-                        const month_end = new Date(el.week_end).toLocaleString("default", { month: "short" });
-                        return (
-                          <th className="py-2 px-4 border border-white" colSpan={6}>
-                            {`${start} ${month_start} - ${end} ${month_end}`}
-                          </th>
-                        );
-                      })}
+                  {Object.keys(recap).length && (
+                    <th
+                      className="py-2 px-4 border border-white"
+                      colSpan={6 * recap[Object.keys(recap)[0]].length} // Menggabungkan semua kolom presensi
+                    >
+                      {(() => {
+                        const firstItem = recap[Object.keys(recap)[0]][0];
+                        const startDate = search.startDate ? new Date(search.startDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+                        const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+
+                        return `${startDate} - ${endDate}`;
+                      })()}
+                    </th>
+                  )}
                 </tr>
                 <tr>
                   {Object.keys(recap).length &&
