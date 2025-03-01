@@ -62,8 +62,8 @@ function Login() {
 
   return (
     <div className="flex flex-col items-center justify-start relative text-lg">
-      <Navbar className="bg-themeTeal mb-24" />
-      <div className="bg-white mb-24">
+      <Navbar className="bg-white shadow-md mb-10" />
+      <div className="bg-milkyWhite shadow-lg rounded-xl mb-24">
         <div className="border-b-2 py-12 px-24 flex flex-col items-center">
           <p className=" font-bold text-lg md:text-2xl mb-2">SI ELIT</p>
           <p className="italic font-light text-center mb-1 md:mb-0">Sistem Smart Electronic Identification</p>

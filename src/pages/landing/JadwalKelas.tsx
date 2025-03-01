@@ -64,7 +64,7 @@ function JadwalKelas() {
 
     return (
         <div className="flex flex-col items-center justify-start relative text-lg">
-            <Navbar className="bg-themeTeal mb-24" />
+            <Navbar className="bg-white shadow-md mb-24" />
             <p className="font-bold text-3xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
             <div className="w-10/12 flex flex-col md:w-full md:flex-row md:gap-8 justify-between items-end md:items-center mb-4 md:max-w-5xl">
                 <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full mb-4 md:max-w-md" inputClassName="bg-white" value={search.string} />
