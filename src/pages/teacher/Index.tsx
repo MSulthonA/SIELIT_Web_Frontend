@@ -3,7 +3,7 @@ import Footer from "../../components/Footer";
 import Navbar from "./components/NavbarGuru";
 import { Outlet } from 'react-router-dom';
 import { AppContext } from "../../AppContext";
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
 import Sidebar from "./components/Sidebar";
 import BypassPresensidanPerizinanMobile from "./BypassPresensidanPerizinanMobile";
 

@@ -117,14 +117,11 @@ function RekapPresensi() {
     ];
 
     if (weeks) {
-      weeks.forEach((week) => {
-        const start = new Date(week.week_start).getDate();
-        const end = new Date(week.week_end).getDate();
-        const month_start = new Date(week.week_start).toLocaleString("default", { month: "short" });
-        const month_end = new Date(week.week_end).toLocaleString("default", { month: "short" });
-        tableColumn[0].push({ content: `${start} ${month_start} - ${end} ${month_end}`, colSpan: 6 });
-      });
+      const startDate = search.startDate ? new Date(search.startDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+      const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+      const dateRangeText = `${startDate} - ${endDate}`;
 
+      tableColumn[0].push({ content: dateRangeText, colSpan: 6 * weeks.length, styles: { halign: "center" } });
       tableColumn.push([]);
       weeks.forEach((_, idx) => {
         tableColumn[1].push({ content: `Presensi Minggu - ${idx + 1}`, colSpan: 6 });
@@ -218,11 +215,10 @@ function RekapPresensi() {
       weeks = weeks.sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
 
       weeks.forEach((week, idx) => {
-        const start = new Date(week.week_start).getDate();
-        const end = new Date(week.week_end).getDate();
-        const month_start = new Date(week.week_start).toLocaleString("default", { month: "short" });
-        const month_end = new Date(week.week_end).toLocaleString("default", { month: "short" });
-        headerRow1.push(`${start} ${month_start} - ${end} ${month_end}`, "", "", "", "", "");
+        const startDate = search.startDate ? new Date(search.startDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+        const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+        const dateRangeText = `${startDate} - ${endDate}`;
+        headerRow1.push(`${dateRangeText}`, "", "", "", "", "");
         headerRow2.push(`Presensi Minggu - ${idx + 1}`, "", "", "", "", "");
         headerRow3.push("", "", "", "", "", "PAGI", "MALAM");
         headerRow4.push("H", "I", "A", "", "H", "I", "A", "H", "I", "A", "H", "I", "A");
@@ -279,15 +275,26 @@ function RekapPresensi() {
     const ws = XLSX.utils.aoa_to_sheet(ws_data);
 
     // Merge cells for the headers
+    // Merge cells for the headers
     const merge = [
       { s: { r: 0, c: 0 }, e: { r: 3, c: 0 } }, // No.
       { s: { r: 0, c: 1 }, e: { r: 3, c: 1 } }, // Nama Lengkap
       { s: { r: 0, c: 2 }, e: { r: 3, c: 2 } }, // Gender
       { s: { r: 0, c: 3 }, e: { r: 3, c: 3 } }, // Jml Jadwal
     ];
+
     let col = 4;
     weeks.forEach((week, idx) => {
-      merge.push({ s: { r: 0, c: col }, e: { r: 0, c: col + 5 } }, { s: { r: 1, c: col }, e: { r: 1, c: col + 5 } }, { s: { r: 2, c: col }, e: { r: 2, c: col + 2 } }, { s: { r: 2, c: col + 3 }, e: { r: 2, c: col + 5 } });
+      const startDate = search.startDate ? new Date(search.startDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+      const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
+      const dateRangeText = `${startDate} - ${endDate}`;
+
+      // Merge only dateRangeText at row 0
+      merge.push({ s: { r: 0, c: col }, e: { r: 0, c: col + 5 } });
+
+      // Preserve existing merges
+      merge.push({ s: { r: 1, c: col }, e: { r: 1, c: col + 5 } }, { s: { r: 2, c: col }, e: { r: 2, c: col + 2 } }, { s: { r: 2, c: col + 3 }, e: { r: 2, c: col + 5 } });
+
       col += 6;
     });
 
@@ -301,6 +308,7 @@ function RekapPresensi() {
     // Save the Excel file
     XLSX.writeFile(wb, "rekap_presensi.xlsx");
   };
+
   return (
     <div className="min-h-[100svh] flex flex-col items-center justify-start w-full pt-4 pb-16 overflow-x-auto">
       <p className="font-bold text-xl md:text-3xl mb-16">
@@ -409,7 +417,7 @@ function RekapPresensi() {
                         {/* Urutkan recap[el] berdasarkan week_start */}
                         {recap[el]
                           .slice()
-                          .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Sorting ascending
+                          .sort((a, b) => new Date(a.week_start).getTime() - new Date(b.week_start).getTime()) // Sorting ascending
                           .map((item: any) => {
                             return (
                               <>
@@ -493,7 +501,7 @@ function RekapPresensi() {
             </table>
           </div>
 
-          <p className="font-bold text-xl md:text-3xl mb-16">
+          {/* <p className="font-bold text-xl md:text-3xl mb-16">
             Persentase Kehadiran <span className="text-themeTeal"> {`${search.startDate} s/d ${search.endDate}`}</span>
           </p>
           <div className="flex gap-4 mb-6">
@@ -564,7 +572,7 @@ function RekapPresensi() {
                   })}
               </tbody>
             </table>
-          </div>
+          </div> */}
         </>
       )}
     </div>

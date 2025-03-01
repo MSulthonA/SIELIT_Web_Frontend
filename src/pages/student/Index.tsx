@@ -1,9 +1,9 @@
 import { useState, useContext, createContext, useEffect } from "react";
 import Footer from "../../components/Footer";
 import Navbar from "./components/NavbarStudent";
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 import { AppContext } from "../../AppContext";
-import jwt from 'jwt-decode';
+import jwt from "jwt-decode";
 import axios from "axios";
 import { toast } from "react-toastify";
 import appSettings from "../../Appsettings";
@@ -14,6 +14,7 @@ export const userContext = createContext({});
 function Student() {
   const token = useContext(AppContext).token.data;
   const setToken = useContext(AppContext).token.set;
+
   let user = '';
   try {
     user = jwt(token);
