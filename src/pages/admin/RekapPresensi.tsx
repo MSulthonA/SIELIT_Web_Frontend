@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DateInput from "../../components/DateInput";
 import TextInput from "../../components/TextInput";
 import SelectInput from "../../components/SelectInput";
@@ -148,7 +148,10 @@ function RekapPresensi() {
     const tableRows = [];
 
     Object.keys(recap).forEach((key, idx) => {
-      const recapData = recap[key].slice().sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
+      const recapData = recap[key]
+        .slice()
+        .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Sorting ascending
+        .reverse(); // Membalik urutan dari kanan ke kiri
 
       const totalHadirPagi = recapData.reduce((sum, data) => sum + data.jumlah_hadir_pagi, 0);
       const totalIzinPagi = recapData.reduce((sum, data) => sum + data.jumlah_izin_pagi, 0);
@@ -240,8 +243,11 @@ function RekapPresensi() {
     Object.keys(recap).forEach((key, idx) => {
       const recapData = recap[key];
 
-      // Sort recapData by week start date
-      const sortedRecapData = recapData.sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
+      // Sort recapData by week start date and then reverse the order
+      const sortedRecapData = recapData
+        .slice()
+        .sort((a, b) => new Date(a.week_start) - new Date(b.week_start))
+        .reverse(); // Membalik urutan dari kanan ke kiri
 
       // Calculate total pertemuan and total jadwal
       const totalHadirPagi = sortedRecapData.reduce((sum, data) => sum + data.jumlah_hadir_pagi, 0);
@@ -404,30 +410,30 @@ function RekapPresensi() {
                       ))}
                 </tr>
               </thead>
-
               <tbody>
                 {Object.keys(recap).length &&
                   Object.keys(recap).map((el, idx) => {
                     return (
-                      <tr className="even:bg-slate-200 odd:bg-white">
+                      <tr className="even:bg-slate-200 odd:bg-white" key={idx}>
                         <th className="py-2 border border-white">{idx + 1}.</th>
                         <th className="py-2 border border-white">{recap[el][0].name}</th>
                         <th className="py-2 border border-white">{recap[el][0].gender ? "L" : "P"}</th>
 
-                        {/* Urutkan recap[el] berdasarkan week_start */}
+                        {/* Urutkan berdasarkan week_end, lalu reverse */}
                         {recap[el]
                           .slice()
-                          .sort((a, b) => new Date(a.week_start).getTime() - new Date(b.week_start).getTime()) // Sorting ascending
-                          .map((item: any) => {
+                          .sort((a, b) => new Date(a.week_end).getTime() - new Date(b.week_end).getTime()) // Sorting ascending
+                          .reverse() // Membalik urutan dari kanan ke kiri
+                          .map((item: any, index: number) => {
                             return (
-                              <>
+                              <React.Fragment key={index}>
                                 <th className="py-2 border border-white">{item.jumlah_hadir_pagi}</th>
                                 <th className="py-2 border border-white">{item.jumlah_izin_pagi}</th>
                                 <th className="py-2 border border-white bg-red-400 text-white">{item.jumlah_alfa_pagi}</th>
                                 <th className="py-2 border border-white">{item.jumlah_hadir_malam}</th>
                                 <th className="py-2 border border-white">{item.jumlah_izin_malam}</th>
                                 <th className="py-2 border border-white bg-red-400 text-white">{item.jumlah_alfa_malam}</th>
-                              </>
+                              </React.Fragment>
                             );
                           })}
                       </tr>
