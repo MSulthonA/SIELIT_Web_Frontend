@@ -124,7 +124,7 @@ function RekapPresensi() {
       tableColumn[0].push({ content: dateRangeText, colSpan: 6 * weeks.length, styles: { halign: "center" } });
       tableColumn.push([]);
       weeks.forEach((_, idx) => {
-        tableColumn[1].push({ content: `Presensi Minggu - ${idx + 1}`, colSpan: 6 });
+        tableColumn[1].push({ content: `Presensi Hari - ${idx + 1}`, colSpan: 6 });
       });
 
       tableColumn.push([]);
@@ -222,7 +222,7 @@ function RekapPresensi() {
         const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
         const dateRangeText = `${startDate} - ${endDate}`;
         headerRow1.push(`${dateRangeText}`, "", "", "", "", "");
-        headerRow2.push(`Presensi Minggu - ${idx + 1}`, "", "", "", "", "");
+        headerRow2.push(`Presensi Hari - ${idx + 1}`, "", "", "", "", "");
         headerRow3.push("", "", "", "", "", "PAGI", "MALAM");
         headerRow4.push("H", "I", "A", "", "H", "I", "A", "H", "I", "A", "H", "I", "A");
       });
@@ -373,7 +373,7 @@ function RekapPresensi() {
                       .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Urutkan ascending
                       .map((el: any, idx) => (
                         <th className="py-2 px-4 border border-white" colSpan={6}>
-                          {`Presensi Minggu - ${idx + 1}`}
+                          {`Presensi Hari - ${idx + 1}`}
                         </th>
                       ))}
                 </tr>
