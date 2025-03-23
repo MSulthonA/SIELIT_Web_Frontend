@@ -103,10 +103,72 @@ function RekapPresensi() {
       });
   }
 
-  const exportToPDF = () => {
+  function exportToPDF() {
     const doc = new jsPDF("landscape");
-
-    const weeks = Object.keys(recap).length && recap[Object.keys(recap)[0]].slice().sort((a, b) => new Date(a.week_start) - new Date(b.week_start));
+    const MAX_DAYS_PER_PAGE = 5; // Adjust this number based on your paper size
+  
+    // Get sorted weeks
+    const weeks = Object.keys(recap).length 
+      ? recap[Object.keys(recap)[0]]
+          .slice()
+          .sort((a, b) => new Date(a.week_start) - new Date(b.week_start))
+      : [];
+  
+    // Split weeks into chunks
+    const weekChunks = [];
+    for (let i = 0; i < weeks.length; i += MAX_DAYS_PER_PAGE) {
+      weekChunks.push(weeks.slice(i, i + MAX_DAYS_PER_PAGE));
+    }
+  
+    let startY = 20;
+    weekChunks.forEach((chunk, chunkIndex) => {
+      // Build table structure for this chunk
+      const { tableColumn, tableRows } = buildTableData(chunk);
+  
+      if (chunkIndex > 0) {
+        doc.addPage();
+        startY = 20;
+      }
+  
+      // Add title
+      doc.text(`Rekap Presensi - Part ${chunkIndex + 1}`, 14, 15);
+      
+      // Create table
+      doc.autoTable({
+        head: tableColumn,
+        body: tableRows,
+        startY: startY,
+        headStyles: {
+          fillColor: [19, 168, 157],
+          textColor: [255, 255, 255],
+          fontSize: 8,
+        },
+        styles: {
+          fontSize: 7,
+          overflow: "linebreak",
+          valign: "middle",
+          halign: "center",
+          lineWidth: 0.1,
+          cellPadding: 1,
+        },
+        columnStyles: {
+          0: { cellWidth: 8 },  // No
+          1: { cellWidth: 40 }, // Name
+          2: { cellWidth: 15 }, // Gender
+          3: { cellWidth: 20 }, // Total Schedule
+        },
+        theme: "grid",
+        margin: { horizontal: 2 }
+      });
+  
+      startY = (doc as any).lastAutoTable.finalY + 10;
+    });
+  
+    doc.save("rekap_presensi.pdf");
+  }
+  
+  // Helper function to build table data for each chunk
+  function buildTableData(weeksChunk: any[]) {
     const tableColumn = [
       [
         { content: "No.", rowSpan: 4 },
@@ -115,92 +177,94 @@ function RekapPresensi() {
         { content: "Jml Jadwal", rowSpan: 4 },
       ],
     ];
-
-    if (weeks) {
-      const startDate = search.startDate ? new Date(search.startDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
-      const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" }) : "-";
-      const dateRangeText = `${startDate} - ${endDate}`;
-
-      tableColumn[0].push({ content: dateRangeText, colSpan: 6 * weeks.length, styles: { halign: "center" } });
-      tableColumn.push([]);
-      weeks.forEach((_, idx) => {
-        tableColumn[1].push({ content: `Presensi Hari - ${idx + 1}`, colSpan: 6 });
+  
+    // Add date range header
+    if (weeksChunk.length > 0) {
+      const startDate = search.startDate ? new Date(search.startDate).toLocaleDateString("id-ID") : "-";
+      const endDate = search.endDate ? new Date(search.endDate).toLocaleDateString("id-ID") : "-";
+      
+      tableColumn[0].push({
+        content: `${startDate} - ${endDate}`,
+        colSpan: 6 * weeksChunk.length,
+        styles: { halign: "center" }
       });
-
+  
+      // Add subheaders
       tableColumn.push([]);
-      weeks.forEach(() => {
+      weeksChunk.forEach((_, idx) => {
+        tableColumn[1].push({ 
+          content: `Hari-${idx + 1}`, 
+          colSpan: 6 
+        });
+      });
+  
+      tableColumn.push([]);
+      weeksChunk.forEach(() => {
         tableColumn[2].push({ content: "PAGI", colSpan: 3 });
         tableColumn[2].push({ content: "MALAM", colSpan: 3 });
       });
-
+  
       tableColumn.push([]);
-      weeks.forEach(() => {
+      weeksChunk.forEach(() => {
         ["H", "I", "A", "H", "I", "A"].forEach((label) => {
-          tableColumn[3].push({ content: label, rowSpan: 1 });
+          tableColumn[3].push(label);
         });
       });
-
-      tableColumn[0].push({ content: "% Hadir", rowSpan: 4 });
-      tableColumn[0].push({ content: "% Izin", rowSpan: 4 });
-      tableColumn[0].push({ content: "% Alpha", rowSpan: 4 });
+  
+      // Add summary columns
+      tableColumn[0].push(
+        { content: "% Hadir", rowSpan: 4 },
+        { content: "% Izin", rowSpan: 4 },
+        { content: "% Alpha", rowSpan: 4 }
+      );
     }
-
+  
+    // Build table rows
     const tableRows = [];
-
     Object.keys(recap).forEach((key, idx) => {
       const recapData = recap[key]
         .slice()
-        .sort((a, b) => new Date(a.week_start) - new Date(b.week_start)) // Sorting ascending
-        .reverse(); // Membalik urutan dari kanan ke kiri
-
-      const totalHadirPagi = recapData.reduce((sum, data) => sum + data.jumlah_hadir_pagi, 0);
-      const totalIzinPagi = recapData.reduce((sum, data) => sum + data.jumlah_izin_pagi, 0);
-      const totalAlfaPagi = recapData.reduce((sum, data) => sum + data.jumlah_alfa_pagi, 0);
-      const totalHadirMalam = recapData.reduce((sum, data) => sum + data.jumlah_hadir_malam, 0);
-      const totalIzinMalam = recapData.reduce((sum, data) => sum + data.jumlah_izin_malam, 0);
-      const totalAlfaMalam = recapData.reduce((sum, data) => sum + data.jumlah_alfa_malam, 0);
-
-      const totalPertemuan = totalHadirPagi + totalIzinPagi + totalAlfaPagi + totalHadirMalam + totalIzinMalam + totalAlfaMalam;
-
-      const totalJadwal = totalPertemuan;
-      const percentageHadir = totalJadwal ? (((totalHadirPagi + totalHadirMalam) / totalJadwal) * 100).toFixed(0) + "%" : "0%";
-      const percentageIzin = totalJadwal ? (((totalIzinPagi + totalIzinMalam) / totalJadwal) * 100).toFixed(0) + "%" : "0%";
-      const percentageAlpha = totalJadwal ? (((totalAlfaPagi + totalAlfaMalam) / totalJadwal) * 100).toFixed(0) + "%" : "0%";
-
+        .sort((a, b) => new Date(a.week_start) - new Date(b.week_start))
+        .reverse()
+        .filter(item => weeksChunk.some(chunkItem => chunkItem.week_start === item.week_start));
+  
+      // Calculate percentages
+      const totals = recapData.reduce((acc, data) => ({
+        hadir: acc.hadir + data.jumlah_hadir_pagi + data.jumlah_hadir_malam,
+        izin: acc.izin + data.jumlah_izin_pagi + data.jumlah_izin_malam,
+        alfa: acc.alfa + data.jumlah_alfa_pagi + data.jumlah_alfa_malam,
+      }), { hadir: 0, izin: 0, alfa: 0 });
+  
+      const total = totals.hadir + totals.izin + totals.alfa;
+      const percentages = {
+        hadir: total ? `${Math.round((totals.hadir / total) * 100)}%` : "0%",
+        izin: total ? `${Math.round((totals.izin / total) * 100)}%` : "0%",
+        alfa: total ? `${Math.round((totals.alfa / total) * 100)}%` : "0%",
+      };
+  
       const rowData = [
         idx + 1,
-        recapData[0].name,
-        recapData[0].gender ? "L" : "P",
-        totalPertemuan,
-        ...recapData.flatMap((data) => [data.jumlah_hadir_pagi, data.jumlah_izin_pagi, data.jumlah_alfa_pagi, data.jumlah_hadir_malam, data.jumlah_izin_malam, data.jumlah_alfa_malam]),
-        percentageHadir,
-        percentageIzin,
-        percentageAlpha,
+        recapData[0]?.name || "",
+        recapData[0]?.gender ? "L" : "P",
+        recapData.length * 2, // Total sessions (pagi + malam)
+        ...recapData.flatMap(data => [
+          data.jumlah_hadir_pagi,
+          data.jumlah_izin_pagi,
+          data.jumlah_alfa_pagi,
+          data.jumlah_hadir_malam,
+          data.jumlah_izin_malam,
+          data.jumlah_alfa_malam,
+        ]),
+        percentages.hadir,
+        percentages.izin,
+        percentages.alfa,
       ];
+  
       tableRows.push(rowData);
     });
-
-    doc.text("Rekap Presensi", 14, 15);
-    doc.autoTable({
-      head: tableColumn,
-      body: tableRows,
-      startY: 20,
-      headStyles: {
-        fillColor: [19, 168, 157],
-        textColor: [255, 255, 255],
-      },
-      styles: {
-        overflow: "linebreak",
-        valign: "middle",
-        halign: "center",
-        lineWidth: 0.1,
-        cellPadding: 2,
-      },
-      theme: "grid",
-    });
-
-    doc.save("rekap_presensi.pdf");
-  };
+  
+    return { tableColumn, tableRows };
+  }
 
   const exportToExcel = () => {
     const wb = XLSX.utils.book_new();

@@ -88,8 +88,8 @@ function Beranda() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row w-full -mt-10 md:-mt-24 md:left-0 left-10 overflow-x-hidden">
-      <div className='bg-white shadow w-[225px] md:w-full rounded-md m-3 p-2'>
+    <div className="flex flex-col justify-center md:flex-row w-full -mt-10 md:-mt-24 md:left-0 left-10 overflow-x-hidden">
+      <div className='bg-white shadow w-full md:w-1/3 rounded-md m-3 p-2'>
         <div className='flex flex-col items-center justify-center border-b border-black pt-16'>
           <div className='bg-[#192B1F]/20 w-fit p-2 md:p-3 rounded-full mb-3 md:mb-5'>
             <PiStudentLight className="text-6xl md:text-7xl mx-auto" />
@@ -129,7 +129,7 @@ function Beranda() {
         </div>
       </div>
       <div className='flex flex-col md:flex-row pt-3'>
-        <div className="flex flex-col w-28 w-[225px] md:w-auto p-5 mx-3 md:mx-0 flex-1 bg-white shadow-md rounded-md">
+        <div className="flex flex-col w-full md:w-1/3 p-5 mx-3 md:mx-0 flex-1 bg-white shadow-md rounded-md">
           <p className="font-bold text-xl md:text-3xl pr-7">Pengajian</p>
           <span className="font-bold text-lg md:text-2xl text-themeTeal mb-4">Yang akan datang</span>
           <div className="flex flex-col overflow-y-auto max-h-96">
@@ -154,7 +154,7 @@ function Beranda() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center md:items-start w-full h-min pt-3 md:pl-3">
+      <div className="flex flex-col items-center md:items-start w-full md:w-1/3 h-min pt-3 md:pl-3">
         <div className='flex flex-col items-center justify-start flex-1 bg-white rounded-md shadow-md p-5'>
           <h3 className='font-bold text-lg md:text-3xl mb-4'>Persentase kehadiran</h3>
           <div className='w-28 h-28'>
